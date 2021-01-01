@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <link href="./node_modules/vanillajs-datepicker/dist/css/datepicker.min.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Header -->
+<header class="navbar navbar-light bg-light p-3">
+    <span class="navbar-brand mb-0 h1">식단관리</span>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newMealModal">
+        새 식단 추가
+    </button>
+</header>
+
+<!-- Show Cards -->
+<div class="container py-5">
+    <div id="cards" class="row" data-masonry='{"percentPosition": true }'>
+        <!-- CARDS -->
+    </div>
+</div>
+
+<!-- NewMeal Modal -->
+<div class="modal fade" id="newMealModal" tabindex="-1" aria-labelledby="newMealModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">새 식단 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form class="row g-3 needs-validation" action="/process/NewMeal" method="post" id="newMealForm">
+                        <!-- 사진 -->
+                        <div class="input">
+                            <img id="previewImg"
+                                 class="mx-auto d-block img-fluid rounded"
+                                 style="padding: 10px;"
+                                 src="https://picsum.photos/200" alt="Meal Image Preview">
+                            <input class="form-control" type="file" id="mealImg" name="mealImg" accept="image/*"
+                                   onchange="loadImageFile(event)"/>
+                        </div>
+
+                        <!-- 파일 이름 -->
+                        <div class="input-group mb">
+                            <label class="input-group-text" for="newMealName">식단 이름</label>
+                            <input id="newMealName" type="text" class="form-control" name="newMealName">
+                        </div>
+
+                        <!-- 날짜 -->
+                        <!-- TODO: on date change, change name -->
+                        <div class="input-group mb">
+                            <label for="newMealDate" class="input-group-text">날짜 선택</label>
+                            <input id="newMealDate" name="datepicker" type="text" class="form-control datepicker-input"
+                                   onChageDate="onDateChanged()"
+                                   style="background-color: white;" readonly>
+                        </div>
+
+                        <!-- 식사 종류 (점심/저녁) -->
+                        <div id="selectMealType" class="input-group">
+                            <span class="form-label input-group-text" style="margin: 0;">식사 종류</span>
+                            <div class="btn-group form-control" role="group"
+                                 aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="mealType" id="lunchRadio"
+                                       autocomplete="off" value="점심" onclick="onMealTypeChecked(this.value)">
+                                <label class="btn btn-outline-primary" for="lunchRadio">점심</label>
+
+                                <input type="radio" class="btn-check" name="mealType" id="dinnerRadio"
+                                       autocomplete="off" value="저녁" onclick="onMealTypeChecked(this.value)">
+                                <label class="btn btn-outline-primary" for="dinnerRadio">저녁</label>
+                            </div>
+                        </div>
+
+                        <!-- 메뉴명 -->
+                        <!-- TODO: onchange...? -->
+                        <div id="menus" class="">
+                            <div class="form-floating mb-2">
+                                <!-- BUGGY PART: onchange -->
+                                <input type="text" class="form-control" id="menu0"
+                                       placeholder="메뉴명을 입력하세요" onchange="newmenu()">
+                                <label for="menu0">메뉴명</label>
+                            </div>
+                        </div>
+
+                        <!-- 간식 -->
+                        <!-- TODO: onchange...? -->
+                        <div id="snacks" class="">
+                            <!-- switcher -->
+                            <div class="form-check form-switch">
+                                <input id="snackChecker" class="form-check-input" type="checkbox"
+                                       onchange="onSnackCheckboxChange(this.checked)">
+                                <label for="snackChecker" class="form-check-label">간식</label>
+                            </div>
+                            <!-- snack names -->
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control snackCheckers" id="snack0"
+                                       placeholder="간식명을 입력하세요" disabled>
+                                <label for="snack0">간식명</label>
+                            </div>
+                        </div>
+
+                        <!-- TODO: validation -->
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="newMealForm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./node_modules/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+<script src="./node_modules/vanillajs-datepicker/dist/js/locales/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+<script src="./js/NewMeal.js"></script>
+
+<script>
+    openMeal()
+
+    function createCardElem(name, imgsrc, menus)
+    {
+        let div_col = document.createElement('div');
+        div_col.setAttribute('class', 'col-sm-6 col-lg-4 mb-4');
+
+        let div_card = document.createElement('div');
+        div_card.setAttribute('class', 'card');
+
+        let img = document.createElement('img');
+        img.setAttribute('alt', name);
+        img.setAttribute('src', imgsrc);
+        img.setAttribute('class', 'card-img-top');
+
+        let div_cardBody = document.createElement('div');
+        div_cardBody.setAttribute('class', 'card-body');
+
+        let h5 = document.createElement('h5');
+        h5.setAttribute('class', 'card-title');
+        h5.innerHTML = name;
+
+        let p = document.createElement('p');
+        p.setAttribute('class', 'card-text');
+        p.innerHTML = menus;
+
+        div_cardBody.appendChild(h5);
+        div_cardBody.appendChild(p);
+        div_card.appendChild(img);
+        div_card.appendChild(div_cardBody);
+        div_col.appendChild(div_card);
+
+        return div_col;
+    }
+
+    function attachCard(name, imgsrc, menus)
+    {
+        let card = createCardElem(name, imgsrc, menus)
+        document.getElementById('cards').appendChild(card)
+    }
+
+    // FILE LOAD
+    function openMeal()
+    {
+        /* Sample Data */
+        for (let i = 0; i < 30; i++) {
+            function randomInt( min, max ) {
+                return Math.floor( Math.random() * max + min );
+            }
+
+            let width = randomInt(15, 40) * 10
+            let height = randomInt(15, 30) * 10
+
+            attachCard(i, 'https://picsum.photos/' + width + '/' + height, 'loremipsum'.repeat(width / 10));
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+<!--<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>-->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.pkgd.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let $container = $("#cards");
+
+        $container.imagesLoaded(function () {
+            $container.masonry();
+        });
+    });
+</script>
+</body>
+</html>
