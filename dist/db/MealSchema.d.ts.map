@@ -1,1 +1,1 @@
-{"version":3,"file":"MealSchema.d.ts","sourceRoot":"","sources":["../../src/db/MealSchema.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAA;AAC/B,QAAA,MAAM,UAAU,iFAOd,CAAA;AACF,OAAO,EAAC,UAAU,EAAC,CAAA"}
+{"version":3,"file":"MealSchema.d.ts","sourceRoot":"","sources":["../../src/db/MealSchema.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAA;AAS/B,QAAA,MAAM,SAAS,wCAAqC,CAAA;AACpD,OAAO,EAAC,SAAS,EAAC,CAAA"}

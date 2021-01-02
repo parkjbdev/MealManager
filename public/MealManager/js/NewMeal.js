@@ -9,37 +9,15 @@ let name;
 let date = new Date();
 let mealType = "";
 
+document.getElementById('newMealDate').valueAsDate = date
 updateMealName();
-
-const datepickerElement = document.querySelector('input[name="datepicker"]');
-const datepicker = new Datepicker(datepickerElement, {
-    // options here
-    buttonClass: 'btn',
-    container: '#newMealModal',
-
-    autohide: true,
-    format: 'yyyy년 mm월 dd일 DD',
-    language: 'ko',
-    todayHighlight: true,
-    disableTouchKeyboard: true,
-    orientation: 'bottom auto',
-});
-datepicker.setDate(date)
-
-datepickerElement.addEventListener('changeDate', onDateChanged)
-
-datesElem = document.getElementsByClassName('datepicker-cell day')
-for(let i = 0;i < datesElem.length;i++)
-{
-    let elem = datesElem.item(i)
-    elem.setAttribute('onClick', 'onDateChanged()')
-}
 
 function updateMealName()
 {
-    if (mealType === "") name = date.toDateString() + " 급식사진";
-    else name = date.toDateString() + " " + mealType + " 급식사진";
+    if (mealType === "") name = date.toDateString() + " 급식";
+    else name = date.toDateString() + " " + mealType + " 급식";
     document.getElementById('newMealName').setAttribute('value', name);
+    document.getElementById('exampleModalLabel').innerHTML = name;
 }
 
 function onMealTypeChecked(value)
@@ -50,7 +28,11 @@ function onMealTypeChecked(value)
 
 function onDateChanged()
 {
-    date = datepicker.getDate();
+    const dateString = document.getElementById('newMealDate').value
+    const year = parseInt(dateString.substring(0, 4))
+    const month = parseInt(dateString.substring(5, 7))
+    const day = parseInt(dateString.substring(8))
+    date = new Date(year, month - 1, day)
     updateMealName();
 }
 
@@ -64,8 +46,8 @@ function loadImageFile(event)
     }
 }
 
-menuCnt = 0;
-snackCnt = 0;
+let menuCnt = 0;
+let snackCnt = 0;
 
 function newmenu()
 {
@@ -81,7 +63,7 @@ function newmenu()
     inputElement.setAttribute('name', 'menu');
     inputElement.setAttribute('placeholder', '메뉴명을 입력하세요');
     inputElement.setAttribute('onKeyPress', ' {e => {if (e.key === \'Enter\') e.preventDefault();}}')
-    // BUGGY PART
+    // TODO: BUG
     inputElement.onchange = newmenu;
 
     let label = document.createElement("label");
