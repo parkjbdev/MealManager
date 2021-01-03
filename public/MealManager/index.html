@@ -35,9 +35,10 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <form class="row g-3 needs-validation" action="/process/NewMeal" method="post" id="newMealForm">
+                    <form class="row g-3 needs-validation" action="/process/NewMeal" enctype="multipart/form-data" method="post" id="newMealForm">
                         <!-- 제목 -->
                         <input type="hidden" id="newMealName" name="newMealName">
+                        <input type="hidden" id="newMealFolderName" name="newMealFolderName">
 
                         <!-- 사진 -->
                         <div class="input">

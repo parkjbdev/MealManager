@@ -1,33 +1,42 @@
-Date.prototype.toDateString = function ()
-{
-    return this.getFullYear().toString() +
-        ('0' + (this.getMonth() + 1)).slice(-2).toString() +
-        ('0' + this.getDate()).slice(-2).toString();
+Date.prototype.getFullYearString = function () {
+    return this.getFullYear().toString();
+}
+Date.prototype.getDateString = function() {
+    return ('0' + this.getDate()).slice(-2).toString();
+}
+Date.prototype.getMonthString = function() {
+    return ('0' + (this.getMonth() + 1)).slice(-2).toString();
+}
+Date.prototype.toDateString = function (delimiter) {
+    if(delimiter === undefined) delimiter = ''
+    return this.getFullYearString() + delimiter +
+        this.getMonthString() + delimiter +
+        this.getDateString();
 };
 
 let name;
 let date = new Date();
 let mealType = "";
 
-document.getElementById('newMealDate').valueAsDate = date
+// TODO: wrong date BUG
+document.getElementById('newMealDate').value = date.toDateString('-')
+
 updateMealName();
 
-function updateMealName()
-{
+function updateMealName() {
     if (mealType === "") name = date.toDateString() + " 급식";
     else name = date.toDateString() + " " + mealType + " 급식";
+    document.getElementById('newMealFolderName').setAttribute('value', date.toDateString('-').substring(0, 7))
     document.getElementById('newMealName').setAttribute('value', name);
-    document.getElementById('exampleModalLabel').innerHTML = name;
+    document.getElementById('exampleModalLabel').innerHTML = name
 }
 
-function onMealTypeChecked(value)
-{
+function onMealTypeChecked(value) {
     mealType = value;
     updateMealName();
 }
 
-function onDateChanged()
-{
+function onDateChanged() {
     const dateString = document.getElementById('newMealDate').value
     const year = parseInt(dateString.substring(0, 4))
     const month = parseInt(dateString.substring(5, 7))
@@ -36,12 +45,10 @@ function onDateChanged()
     updateMealName();
 }
 
-function loadImageFile(event)
-{
+function loadImageFile(event) {
     const output = document.getElementById('previewImg');
     output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = () =>
-    {
+    output.onload = () => {
         URL.revokeObjectURL(output.src) // free memory
     }
 }
@@ -49,8 +56,7 @@ function loadImageFile(event)
 let menuCnt = 0;
 let snackCnt = 0;
 
-function newmenu()
-{
+function newmenu() {
     menuCnt++;
     id = 'menu' + menuCnt;
     let div = document.createElement("div");
@@ -76,12 +82,11 @@ function newmenu()
     inputElement.focus();
 }
 
-function newsnack()
-{
+function newsnack() {
 
 }
-function onSnackCheckboxChange(state)
-{
+
+function onSnackCheckboxChange(state) {
     // TODO
     document.getElementById('snack0').disabled = !state;
 }
