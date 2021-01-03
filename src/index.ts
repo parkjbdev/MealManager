@@ -1,6 +1,7 @@
 import path from 'path'
 import express from 'express'
 import serve_static from 'serve-static'
+import fs from 'fs'
 
 let app = express()
 
@@ -14,19 +15,30 @@ app.use(express.urlencoded( {extended : false } ));
 // app.use('/MealManager', serve_static(path.join(__dirname, '../public/MealManager')))
 app.use('/', serve_static(path.join(__dirname, '../public')))
 
-// when posted from html
-app.post('/process/NewMeal', (req, res) => {
-	console.log(req.body)
+import multer from "multer";
+const storage = multer.diskStorage({
+	destination(req, file, callback) {
+		const path = `./uploads/${req.body.newMealFolderName}/`
+		fs.mkdirSync(path, {recursive: true})
+		callback(null, path)
+	},
+	filename(req, file, callback) {
+		callback(null, `${req.body.newMealName}사진.${path.extname(file.originalname)}`);
+	}
+})
+const upload = multer({storage: storage})
 
+// when posted from html
+app.post('/process/NewMeal', upload.single('newMealImg'), (req, res) => {
 	const newMeal = new MealDB.Model({
-		// img: req.body.newMealImg,
+		imgInfo: req.file,
 		name: req.body.newMealName,
 		date: req.body.newMealDate,
 		mealType: req.body.mealType,
 		menus: req.body.menu,
 		snacks: 'snack'
 	})
-	newMeal.save().then(() => console.log('Success'))
+	newMeal.save().then(() => console.log('Success saving', req.body))
 
 	res.statusCode = 200
 	res.setHeader('Content-Type', 'text/html;charset=utf8')

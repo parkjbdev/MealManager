@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = new mongoose.Schema({
 	// img: {type: Buffer, required: true},
+	imgInfo: {type: mongoose.Schema.Types.Mixed, required: true},
 	name: {type: String, required: true, unique: true},
 	date: {type: Date, required: true, default: Date.now},
 	mealType: {type: String, required: true},
