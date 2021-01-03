@@ -8,5 +8,9 @@ const Schema = new mongoose.Schema({
 	menus: {type: [String]},
 	snacks: {type: String}
 })
+// Schema.static('findByName', function(name: string)  {
+// 	return this.find({name})
+// })
 const Model = mongoose.model('meal', Schema)
+
 export default {Model}

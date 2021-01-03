@@ -13,6 +13,9 @@ const Schema = new mongoose_1.default.Schema({
     menus: { type: [String] },
     snacks: { type: String }
 });
+// Schema.static('findByName', function(name: string)  {
+// 	return this.find({name})
+// })
 const Model = mongoose_1.default.model('meal', Schema);
 exports.default = { Model };
 //# sourceMappingURL=MealDB.js.map

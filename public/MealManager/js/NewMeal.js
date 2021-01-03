@@ -1,11 +1,11 @@
 Date.prototype.getFullYearString = function () {
     return this.getFullYear().toString();
 }
-Date.prototype.getDateString = function() {
-    return ('0' + this.getDate()).slice(-2).toString();
-}
 Date.prototype.getMonthString = function() {
     return ('0' + (this.getMonth() + 1)).slice(-2).toString();
+}
+Date.prototype.getDateString = function() {
+    return ('0' + this.getDate()).slice(-2).toString();
 }
 Date.prototype.toDateString = function (delimiter) {
     if(delimiter === undefined) delimiter = ''
@@ -18,15 +18,15 @@ let name;
 let date = new Date();
 let mealType = "";
 
-// TODO: wrong date BUG
 document.getElementById('newMealDate').value = date.toDateString('-')
-
 updateMealName();
 
 function updateMealName() {
     if (mealType === "") name = date.toDateString() + " 급식";
     else name = date.toDateString() + " " + mealType + " 급식";
-    document.getElementById('newMealFolderName').setAttribute('value', date.toDateString('-').substring(0, 7))
+    document.getElementById('newMealDateYYYY').setAttribute('value', date.getFullYearString())
+    document.getElementById('newMealDateMM').setAttribute('value', date.getMonthString())
+    document.getElementById('newMealDateDD').setAttribute('value', date.getDateString())
     document.getElementById('newMealName').setAttribute('value', name);
     document.getElementById('exampleModalLabel').innerHTML = name
 }
@@ -56,37 +56,71 @@ function loadImageFile(event) {
 let menuCnt = 0;
 let snackCnt = 0;
 
+if(menuCnt == 0)    newmenu()
+
 function newmenu() {
     menuCnt++;
     id = 'menu' + menuCnt;
     let div = document.createElement("div");
-    div.setAttribute('class', 'form-floating mb-2');
+    div.setAttribute('class', 'input-group my-2');
 
     let inputElement = document.createElement("input");
     inputElement.setAttribute('type', 'text');
     inputElement.setAttribute('class', 'form-control');
     inputElement.setAttribute('id', id);
     inputElement.setAttribute('name', 'menu');
-    inputElement.setAttribute('placeholder', '메뉴명을 입력하세요');
-    inputElement.setAttribute('onKeyPress', ' {e => {if (e.key === \'Enter\') e.preventDefault();}}')
-    // TODO: BUG
-    inputElement.onchange = newmenu;
+    inputElement.setAttribute('placeholder', '메뉴 입력');
 
-    let label = document.createElement("label");
-    label.setAttribute('for', id);
-    label.innerHTML = '메뉴명'
+    let div_button = document.createElement("div")
+    div_button.setAttribute('class', 'input-group-btn')
+
+    let button = document.createElement("button");
+    button.setAttribute('id', 'del_'+id);
+    button.setAttribute('type', 'button');
+    button.setAttribute('class', 'btn btn-outline-danger ms-2');
+    button.onclick = function() {
+        menuCnt--;
+        document.getElementById('menus').removeChild(div)
+    }
+    button.innerHTML = '삭제';
+
+    div_button.appendChild(button)
 
     div.appendChild(inputElement);
-    div.appendChild(label);
+    div.appendChild(div_button);
     document.getElementById('menus').appendChild(div);
     inputElement.focus();
 }
-
 function newsnack() {
+    snackCnt++;
+    id = 'snack' + menuCnt;
+    let div = document.createElement("div");
+    div.setAttribute('class', 'input-group my-2');
 
-}
+    let inputElement = document.createElement("input");
+    inputElement.setAttribute('type', 'text');
+    inputElement.setAttribute('class', 'form-control');
+    inputElement.setAttribute('id', id);
+    inputElement.setAttribute('name', 'snack');
+    inputElement.setAttribute('placeholder', '간식 입력');
 
-function onSnackCheckboxChange(state) {
-    // TODO
-    document.getElementById('snack0').disabled = !state;
+    let div_button = document.createElement("div")
+    div_button.setAttribute('class', 'input-group-btn')
+
+    let button = document.createElement("button");
+    button.setAttribute('id', 'del_'+id);
+    button.setAttribute('type', 'button');
+    button.setAttribute('class', 'btn btn-outline-danger ms-2');
+    button.onclick = function() {
+        snackCnt--;
+        document.getElementById('snacks').removeChild(div)
+    }
+    button.innerHTML = '삭제';
+
+    div_button.appendChild(button)
+
+    div.appendChild(inputElement);
+    div.appendChild(div_button);
+    document.getElementById('snacks').appendChild(div);
+    inputElement.focus();
 }

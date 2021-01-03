@@ -35,13 +35,16 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <form class="row g-3 needs-validation" action="/process/NewMeal" enctype="multipart/form-data" method="post" id="newMealForm">
+                    <form class="row g-3 needs-validation" action="./process/NewMeal" enctype="multipart/form-data"
+                          method="post" id="newMealForm">
                         <!-- 제목 -->
                         <input type="hidden" id="newMealName" name="newMealName">
-                        <input type="hidden" id="newMealFolderName" name="newMealFolderName">
+                        <input type="hidden" id="newMealDateYYYY" name="newMealDateYYYY">
+                        <input type="hidden" id="newMealDateMM" name="newMealDateMM">
+                        <input type="hidden" id="newMealDateDD" name="newMealDateDD">
 
                         <!-- 사진 -->
-                        <div class="input">
+                        <div class="input my-1">
                             <img id="previewImg"
                                  class="mx-auto d-block img-fluid rounded"
                                  style="padding: 10px;"
@@ -51,14 +54,14 @@
                         </div>
 
                         <!-- 날짜 -->
-                        <div class="input-group mb">
+                        <div class="input-group my-1">
                             <label for="newMealDate" class="input-group-text">날짜 선택</label>
                             <input id="newMealDate" type="date" class="form-control" onchange="onDateChanged()"
                                    name="newMealDate" required>
                         </div>
 
                         <!-- 식사 종류 (점심/저녁) -->
-                        <div id="selectMealType" class="input-group">
+                        <div id="selectMealType" class="input-group my-1">
                             <span class="form-label input-group-text" style="margin: 0;">식사 종류</span>
                             <div class="btn-group form-control" role="group"
                                  aria-label="Basic radio toggle button group" aria-required="true">
@@ -73,30 +76,24 @@
                         </div>
 
                         <!-- 메뉴명 -->
-                        <!-- TODO: onchange...? -->
-                        <div id="menus" class="">
-                            <div class="form-floating mb-2">
-                                <!-- TODO: BUGGY PART: onchange -->
-                                <input type="text" class="form-control" id="menu0"
-                                       placeholder="메뉴명을 입력하세요" onchange="newmenu()">
-                                <label for="menu0">메뉴명</label>
+                        <div class="my-1">
+                            <div id="menus">
+                                <!-- 메뉴 항목들 -->
+                            </div>
+                            <div class="d-grid gap-2 my-1">
+                                <button type="button" class="btn btn-outline-primary" onclick="newmenu()">메뉴 추가</button>
                             </div>
                         </div>
 
+
                         <!-- 간식 -->
-                        <!-- TODO: onchange...? -->
-                        <div id="snacks" class="">
-                            <!-- switcher -->
-                            <div class="form-check form-switch">
-                                <input id="snackChecker" class="form-check-input" type="checkbox"
-                                       onchange="onSnackCheckboxChange(this.checked)">
-                                <label for="snackChecker" class="form-check-label">간식</label>
-                            </div>
+                        <div class="my-1">
                             <!-- snack names -->
-                            <div class="form-floating mb-2">
-                                <input type="text" class="form-control snackCheckers" id="snack0"
-                                       placeholder="간식명을 입력하세요" disabled>
-                                <label for="snack0">간식명</label>
+                            <div id="snacks" class="">
+                            </div>
+
+                            <div class="d-grid gap-2 my-1">
+                                <button id="snackAddBtn" type="button" class="btn btn-outline-primary" onclick="newsnack()">간식 추가</button>
                             </div>
                         </div>
 
