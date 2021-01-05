@@ -6,53 +6,51 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const MealDB_1 = __importDefault(require("../db/MealDB"));
 let router = express_1.Router();
-// router.route('/:year/:month')
-// 	.get((req, res) => {
-// 		if(req.params === undefined)	return
-// 		const year: number = Number(req.params.year)
-// 		const month: number = Number(req.params.month)
-// 		const date = new Date(year, month)
-//
-//
-// 	})
-router.route('/')
-    .get((req, res) => {
-    // console.log(req.query)
-    let dateString = req.query.date;
-    let mealTypeString = req.query.mealType;
-    let name;
-    if (mealTypeString === 'lunch')
-        name = dateString + ' 점심 급식';
-    else if (mealTypeString === 'dinner')
-        name = dateString + ' 저녁 급식';
-    else
-        return;
-    // TODO: not works damnnn
-    res.send(MealDB_1.default.Model.find({ name: name }));
-    res.end();
-});
-router.route('/:year/:month/:date/')
+router.route('/:year/:month')
     .get((req, res) => {
     if (req.params === undefined)
         return;
     const year = Number(req.params.year);
     const month = Number(req.params.month);
-    const day = Number(req.params.date);
-    const mealType = req.query.mealType;
-    console.log(year, month, day, mealType);
-    let name;
-    // if(mealType === 'lunch')	name = year + month + day + ' 점심 급식'
-    // else if(mealType === 'dinner')	name = year + month + day + ' 저녁 급식'
-    // else name = year.toString() + month.toString() + day.toString()
-    const date = new Date();
-    date.setFullYear(year);
-    date.setMonth(month - 1);
-    date.setDate(day);
-    // MealModel.Model.findOne({name: })
-    // MealDB.findOne
-    res.writeHead(200, { 'Content-Type': 'text/html;charset==utf8' });
-    // res.write()
-    res.end();
+    MealDB_1.default.MealModel.find({ dateYear: year, dateMonth: month }).exec()
+        .then((value) => {
+        if (value.length === 0)
+            res.send('No Meals');
+        else
+            res.send(value);
+        res.end();
+    });
+});
+router.route('/')
+    .get((req, res) => {
+    var _a, _b;
+    let dateString = (_a = req.query.date) !== null && _a !== void 0 ? _a : '';
+    let mealTypeString = (_b = req.query.mealType) !== null && _b !== void 0 ? _b : '';
+    let name = '';
+    if (mealTypeString === 'lunch')
+        name = dateString + ' 점심 급식';
+    else if (mealTypeString === 'dinner')
+        name = dateString + ' 저녁 급식';
+    if (dateString === '' && mealTypeString === '') {
+        MealDB_1.default.MealModel.find({}).exec()
+            .then((value) => {
+            if (value)
+                res.send(value);
+            else
+                res.send('No Meals');
+            res.end();
+        });
+    }
+    else {
+        MealDB_1.default.MealModel.findOne({ name: name }).exec()
+            .then((value) => {
+            if (value)
+                res.send(value);
+            else
+                res.send('Not found');
+            res.end();
+        });
+    }
 });
 exports.default = { router };
 //# sourceMappingURL=MealInfo.js.map

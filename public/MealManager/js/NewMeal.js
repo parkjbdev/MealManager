@@ -24,9 +24,9 @@ updateMealName();
 function updateMealName() {
     if (mealType === "") name = date.toDateString() + " 급식";
     else name = date.toDateString() + " " + mealType + " 급식";
-    document.getElementById('newMealDateYYYY').setAttribute('value', date.getFullYearString())
-    document.getElementById('newMealDateMM').setAttribute('value', date.getMonthString())
-    document.getElementById('newMealDateDD').setAttribute('value', date.getDateString())
+    document.getElementById('newMealDateYear').setAttribute('value', date.getFullYearString())
+    document.getElementById('newMealDateMonth').setAttribute('value', date.getMonthString())
+    document.getElementById('newMealDateDay').setAttribute('value', date.getDateString())
     document.getElementById('newMealName').setAttribute('value', name);
     document.getElementById('exampleModalLabel').innerHTML = name
 }
@@ -79,6 +79,11 @@ function newmenu() {
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-outline-danger ms-2');
     button.onclick = function() {
+        if(menuCnt - 1 === 0)
+        {
+            alert('최소 1개의 메뉴는 있어야 합니다!')
+            return
+        }
         menuCnt--;
         document.getElementById('menus').removeChild(div)
     }

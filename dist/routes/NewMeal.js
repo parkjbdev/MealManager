@@ -23,19 +23,21 @@ const storage = multer_1.default.diskStorage({
 const upload = multer_1.default({ storage: storage });
 router.route('/process/NewMeal')
     .post(upload.single('newMealImg'), (req, res) => {
-    const newMeal = new MealDB_1.default.Model({
-        imgInfo: req.file,
+    const newMeal = new MealDB_1.default.MealModel({
+        imgPath: req.file.path,
         name: req.body.newMealName,
         date: req.body.newMealDate,
+        dateYear: req.body.newMealDateYear,
+        dateMonth: req.body.newMealDateMonth,
+        dateDay: req.body.newMealDateDay,
         mealType: req.body.mealType,
         menus: req.body.menu,
-        snacks: 'snack'
+        snacks: req.body.snack
     });
-    newMeal.save().then(() => console.log('Success saving', req.body));
+    newMeal.save().then(() => console.log(newMeal));
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html;charset=utf8');
-    res.send(req.body);
-    // res.redirect('/MealManager')
+    res.redirect('/MealManager');
     res.end();
 });
 exports.default = { router };
