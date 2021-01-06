@@ -31,6 +31,12 @@ function updateMealName() {
     document.getElementById('exampleModalLabel').innerHTML = name
 }
 
+function translate(mealType: string) {
+    if(mealType === '점심')   return 'lunch'
+    else if(mealType === '저녁')  return 'dinner'
+    else return mealType
+}
+
 function onMealTypeChecked(value) {
     mealType = value;
     updateMealName();

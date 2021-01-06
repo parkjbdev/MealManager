@@ -2,8 +2,8 @@ import path from 'path'
 import express from 'express'
 import serve_static from 'serve-static'
 
-import MealInfo from './routes/MealInfo'
-import NewMeal from './routes/NewMeal'
+import getMeal from './routes/GET_meal'
+import postMeal from './routes/POST_meal'
 
 let app = express()
 
@@ -17,8 +17,8 @@ app.use(express.urlencoded({extended: false}));
 app.use('/', serve_static(path.join(__dirname, '../public')))
 
 // routers
-app.use('/MealManager', MealInfo.router)
-app.use('/MealManager', NewMeal.router)
+app.use('/MealManager', getMeal.router)
+app.use('/MealManager', postMeal.router)
 
 app.listen(app.get('port'), () => {
 	console.log('listening')

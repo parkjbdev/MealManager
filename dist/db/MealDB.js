@@ -14,7 +14,6 @@ const MealSchema = new mongoose_1.default.Schema({
     imgName: { type: String, required: true, unique: true },
     imgPath: { type: String, required: true, unique: true },
     name: { type: String, required: true, unique: true },
-    date: { type: Date, required: true, default: Date.now },
     dateYear: { type: Number, required: true },
     dateMonth: { type: Number, required: true },
     dateDay: { type: Number, required: true },
