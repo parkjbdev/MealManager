@@ -16,7 +16,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 // view static html page
 app.use('/', serve_static_1.default(path_1.default.join(__dirname, '../public')));
 // routers
-app.use('/MealInfo', MealInfo_1.default.router);
+app.use('/MealManager', MealInfo_1.default.router);
 app.use('/MealManager', NewMeal_1.default.router);
 app.listen(app.get('port'), () => {
     console.log('listening');

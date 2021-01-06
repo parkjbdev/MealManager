@@ -12,18 +12,19 @@ let router = express_1.default.Router();
 const storage = multer_1.default.diskStorage({
     destination(req, file, callback) {
         console.log(req.body);
-        const path = `./uploads/${req.body.newMealDateYYYY}/${req.body.newMealDateMM}`;
+        const path = `./uploads/${req.body.newMealDateYear}/${req.body.newMealDateMonth}`;
         fs_1.default.mkdirSync(path, { recursive: true });
         callback(null, path);
     },
     filename(req, file, callback) {
-        callback(null, `${req.body.newMealName}사진.${path_1.default.extname(file.originalname)}`);
+        callback(null, `${req.body.newMealName}사진${path_1.default.extname(file.originalname)}`);
     }
 });
 const upload = multer_1.default({ storage: storage });
 router.route('/process/NewMeal')
     .post(upload.single('newMealImg'), (req, res) => {
     const newMeal = new MealDB_1.default.MealModel({
+        imgName: req.file.filename,
         imgPath: req.file.path,
         name: req.body.newMealName,
         date: req.body.newMealDate,

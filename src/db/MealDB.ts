@@ -8,15 +8,20 @@ mongoose
 	.catch(error => console.error.bind(console, 'connection error'))
 
 export interface IMeal extends mongoose.Document {
+	imgName: string,
 	imgPath: string,
 	name: string,
 	date: Date,
+	dateYear: number,
+	dateMonth: number,
+	dateDay: number,
 	mealType: string,
 	menus: string[],
 	snacks: string[]
 }
 
 const MealSchema: mongoose.Schema<IMeal> = new mongoose.Schema({
+	imgName: {type: String, required: true, unique: true},
 	imgPath: {type: String, required: true, unique: true},
 	name: {type: String, required: true, unique: true},
 	date: {type: Date, required: true, default: Date.now},

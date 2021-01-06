@@ -11,6 +11,7 @@ mongoose_1.default
     .then(value => console.log('connected to db server', value.connection.host))
     .catch(error => console.error.bind(console, 'connection error'));
 const MealSchema = new mongoose_1.default.Schema({
+    imgName: { type: String, required: true, unique: true },
     imgPath: { type: String, required: true, unique: true },
     name: { type: String, required: true, unique: true },
     date: { type: Date, required: true, default: Date.now },

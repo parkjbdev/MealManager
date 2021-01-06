@@ -56,7 +56,7 @@ function loadImageFile(event) {
 let menuCnt = 0;
 let snackCnt = 0;
 
-if(menuCnt == 0)    newmenu()
+if(menuCnt === 0)    newmenu()
 
 function newmenu() {
     menuCnt++;

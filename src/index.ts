@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/', serve_static(path.join(__dirname, '../public')))
 
 // routers
-app.use('/MealInfo', MealInfo.router)
+app.use('/MealManager', MealInfo.router)
 app.use('/MealManager', NewMeal.router)
 
 app.listen(app.get('port'), () => {

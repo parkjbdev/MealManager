@@ -93,7 +93,9 @@
                             </div>
 
                             <div class="d-grid gap-2 my-1">
-                                <button id="snackAddBtn" type="button" class="btn btn-outline-primary" onclick="newsnack()">간식 추가</button>
+                                <button id="snackAddBtn" type="button" class="btn btn-outline-primary"
+                                        onclick="newsnack()">간식 추가
+                                </button>
                             </div>
                         </div>
 
@@ -114,7 +116,7 @@
 <script src="./js/NewMeal.js"></script>
 
 <script>
-    openMeal()
+    openMeal(2021, 1)
 
     function createCardElem(name, imgsrc, menus) {
         let div_col = document.createElement('div');
@@ -154,18 +156,19 @@
     }
 
     // FILE LOAD
-    function openMeal() {
-        /* Sample Data */
-        for (let i = 0; i < 30; i++) {
-            function randomInt(min, max) {
-                return Math.floor(Math.random() * max + min);
-            }
+    function openMeal(year, month) {
+        let jsonPath = `./meals/${year}/${month}/`
 
-            let width = randomInt(15, 40) * 10
-            let height = randomInt(15, 30) * 10
-
-            attachCard(i, 'https://picsum.photos/' + width + '/' + height, 'loremipsum'.repeat(width / 10));
-        }
+        fetch(jsonPath)
+            .then(res => res.json())
+            .then(value => {
+                for (let i = 0; i < value.length; i++) {
+                    let mealType = value[i].mealType
+                    if(mealType === '점심') mealType = 'lunch'
+                    else if(mealType === '저녁')  mealType = 'dinner'
+                    attachCard(value[i].name, `/MealManager/img/${value[i].dateYear}/${value[i].dateMonth}/${value[i].dateDay}/${mealType}`, value[i].menus)
+                }
+            })
     }
 </script>
 
