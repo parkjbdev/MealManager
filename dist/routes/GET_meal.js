@@ -10,32 +10,26 @@ let router = express_1.Router();
 router.route('/img/:year/:month/:date/:mealType')
     .get((req, res) => {
     var _a;
-    const year = Number(req.params.year);
-    const month = Number(req.params.month);
-    const date = Number(req.params.date);
+    const dateYear = Number(req.params.year);
+    const dateMonth = Number(req.params.month);
+    const dateDay = Number(req.params.date);
     let mealType = (_a = req.params.mealType) !== null && _a !== void 0 ? _a : '';
-    if (mealType === 'lunch')
-        mealType = '점심';
-    else if (mealType === 'dinner')
-        mealType = '저녁';
-    MealDB_1.default.MealModel.findOne({ dateYear: year, dateMonth: month, dateDay: date, mealType: mealType })
+    MealDB_1.default.MealModel.findOne({ dateYear, dateMonth, dateDay, mealType })
         .exec()
         .then((value) => {
         let imgPath = path_1.default.resolve(__dirname, '..', '..', value.imgPath);
         res.sendFile(imgPath);
         return;
-    })
-        .catch(() => {
-        res.sendFile('https://www.dgateclassifieds.co.zw/wp-content/uploads/2020/09/no-image.png');
     });
+    //	TODO catch error: no such file
 });
 router.route('/meals/:year/:month')
     .get((req, res) => {
     if (req.params === undefined)
         return;
-    const year = Number(req.params.year);
-    const month = Number(req.params.month);
-    MealDB_1.default.MealModel.find({ dateYear: year, dateMonth: month }).exec()
+    const dateYear = Number(req.params.year);
+    const dateMonth = Number(req.params.month);
+    MealDB_1.default.MealModel.find({ dateYear, dateMonth }).exec()
         .then((value) => {
         if (value.length === 0)
             res.json({ message: 'No Meals' });
@@ -44,33 +38,7 @@ router.route('/meals/:year/:month')
         res.end();
         return;
     });
+    //	TODO catch error: no such file
 });
-//
-// router.route('/')
-// 	.get((req, res) => {
-// 		let dateString = req.query.date ?? ''
-// 		let mealTypeString = req.query.mealType ?? ''
-//
-// 		let name: string = ''
-// 		if (mealTypeString === 'lunch') name = dateString + ' 점심 급식'
-// 		else if (mealTypeString === 'dinner') name = dateString + ' 저녁 급식'
-//
-// 		if(dateString === '' && mealTypeString === '') {
-// 			MealModel.MealModel.find({}).exec()
-// 				.then((value: Document[]) => {
-// 					if(value)	res.json(value)
-// 					else res.json({message: 'No Meals'})
-// 					res.end()
-// 				})
-// 		}
-// 		else {
-// 			MealModel.MealModel.findOne({name: name}).exec()
-// 				.then((value: Document | null) => {
-// 					if(value)	res.json(value)
-// 					else res.json({message: 'Not found'})
-// 					res.end()
-// 				})
-// 		}
-// 	})
 exports.default = { router };
 //# sourceMappingURL=GET_meal.js.map
