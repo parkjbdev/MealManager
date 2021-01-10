@@ -30,7 +30,7 @@ function updateMealName() {
     document.getElementById('newMealDateMonth').setAttribute('value', date.getMonthString())
     document.getElementById('newMealDateDay').setAttribute('value', date.getDateString())
     document.getElementById('newMealName').setAttribute('value', name);
-    document.getElementById('exampleModalLabel').innerHTML = name
+    document.getElementById('newMealModalLabel').innerHTML = name
 }
 
 function translate(mealType) {

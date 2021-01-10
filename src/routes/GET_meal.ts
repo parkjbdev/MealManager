@@ -1,6 +1,5 @@
 import {Router} from "express";
-import MealModel from '../db/MealDB'
-import path from 'path'
+import {gfs, model} from '../db/MealDB/MealDB'
 import {IMeal} from "../interface/IMeal";
 
 let router = Router()
@@ -12,14 +11,21 @@ router.route('/img/:year/:month/:date/:mealType')
 		const dateDay: number = Number(req.params.date)
 		let mealType: string = req.params.mealType ?? ''
 
-		MealModel.MealModel.findOne({dateYear, dateMonth, dateDay, mealType})
+		model.findOne({dateYear, dateMonth, dateDay, mealType})
 			.exec()
 			.then((value: IMeal) => {
-				let imgPath = path.resolve(__dirname, '..', '..', value.imgPath)
-				res.sendFile(imgPath)
-				return
+				gfs.openDownloadStreamByName(value.imgName).pipe(res)
 			})
-	//	TODO catch error: no such file
+	})
+
+router.route('/img/:imgName')
+	.get((req, res, next) => {
+		const imgName:string = req.params.imgName!
+		gfs.find({filename: imgName})
+			.toArray((error, result) => {
+				if(!result[0] || result.length === 0){}
+				else gfs.openDownloadStreamByName(imgName).pipe(res)
+			})
 	})
 
 router.route('/meals/:year/:month')
@@ -28,7 +34,7 @@ router.route('/meals/:year/:month')
 		const dateYear: number = Number(req.params.year)
 		const dateMonth: number = Number(req.params.month)
 
-		MealModel.MealModel.find({dateYear, dateMonth}).exec()
+		model.find({dateYear, dateMonth}).exec()
 			.then((value: Document[]) => {
 				if (value.length === 0) res.json({message: 'No Meals'})
 				else res.json(value)

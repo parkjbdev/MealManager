@@ -8,6 +8,5 @@ export interface IMeal extends mongoose.Document {
     menus: string[];
     snacks: string[];
     imgName: string;
-    imgPath: string;
 }
 //# sourceMappingURL=IMeal.d.ts.map

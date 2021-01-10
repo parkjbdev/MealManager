@@ -8,6 +8,5 @@ export interface IMeal extends mongoose.Document {
 	mealType: string,
 	menus: string[],
 	snacks: string[],
-	imgName: string,
-	imgPath: string
+	imgName: string
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-function createCardElem(name, imgsrc, menus, snacks) {
+async function createCardElem(name, imgsrc, menus, snacks) {
     let div_col = document.createElement('div');
     div_col.setAttribute('class', 'col-sm-6 col-lg-4 mb-4');
 
@@ -17,14 +17,14 @@ function createCardElem(name, imgsrc, menus, snacks) {
 
     let h5 = document.createElement('h5');
     h5.setAttribute('class', 'card-title');
-    h5.innerHTML = name;
+    h5.innerHTML = name
 
     let pMenu = document.createElement('p');
-    pMenu.setAttribute('class', 'card-text');
+    pMenu.setAttribute('class', 'card-text lead');
     pMenu.innerHTML = menus;
 
     let pSnack = document.createElement('p');
-    pSnack.setAttribute('class', 'card-text');
+    pSnack.setAttribute('class', 'card-text lead');
     pSnack.innerHTML = snacks;
 
     let div_buttons = document.createElement('div')
@@ -57,24 +57,26 @@ function createCardElem(name, imgsrc, menus, snacks) {
 
     return div_col;
 }
-
-function attachCard(name, imgsrc, menus, snacks) {
-    let card = createCardElem(name, imgsrc, menus, snacks)
+function attachCard(card) {
     document.getElementById('cards').appendChild(card)
 }
 
 // FILE LOAD
 function openMeal(year, month) {
-    let jsonPath = `./meals/${year}/${month}/`
+    async function fetchMeals(year, month) {
+        let jsonPath = `./meals/${year}/${month}/`
+        const response = await fetch(jsonPath)
+        return await response.json()
+    }
 
-    fetch(jsonPath)
-        .then(res => res.json())
-        .then(value => {
-            for (let i = 0; i < value.length; i++) {
-                let mealType = value[i].mealType
-                if (mealType === '점심') mealType = 'lunch'
-                else if (mealType === '저녁') mealType = 'dinner'
-                attachCard(value[i].name, `/MealManager/img/${value[i].dateYear}/${value[i].dateMonth}/${value[i].dateDay}/${mealType}`, value[i].menus, value[i].snacks)
-            }
+    fetchMeals(year, month)
+        .then(meals => {
+            meals.forEach(meal => {
+                const year = meal.dateYear;
+                const month = ('0' + meal.dateMonth).slice(-2).toString();
+                const date = ('0' + meal.dateDay).slice(-2).toString();
+                createCardElem(meal.name, `./img/${year}/${month}/${date}/${meal.mealType}`, meal.menus, meal.snacks)
+                    .then(attachCard)
+            })
         })
 }

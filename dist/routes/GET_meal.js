@@ -1,11 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const MealDB_1 = __importDefault(require("../db/MealDB"));
-const path_1 = __importDefault(require("path"));
+const MealDB_1 = require("../db/MealDB/MealDB");
 let router = express_1.Router();
 router.route('/img/:year/:month/:date/:mealType')
     .get((req, res) => {
@@ -14,14 +10,21 @@ router.route('/img/:year/:month/:date/:mealType')
     const dateMonth = Number(req.params.month);
     const dateDay = Number(req.params.date);
     let mealType = (_a = req.params.mealType) !== null && _a !== void 0 ? _a : '';
-    MealDB_1.default.MealModel.findOne({ dateYear, dateMonth, dateDay, mealType })
+    MealDB_1.model.findOne({ dateYear, dateMonth, dateDay, mealType })
         .exec()
         .then((value) => {
-        let imgPath = path_1.default.resolve(__dirname, '..', '..', value.imgPath);
-        res.sendFile(imgPath);
-        return;
+        MealDB_1.gfs.openDownloadStreamByName(value.imgName).pipe(res);
     });
-    //	TODO catch error: no such file
+});
+router.route('/img/:imgName')
+    .get((req, res, next) => {
+    const imgName = req.params.imgName;
+    MealDB_1.gfs.find({ filename: imgName })
+        .toArray((error, result) => {
+        if (!result[0] || result.length === 0) { }
+        else
+            MealDB_1.gfs.openDownloadStreamByName(imgName).pipe(res);
+    });
 });
 router.route('/meals/:year/:month')
     .get((req, res) => {
@@ -29,7 +32,7 @@ router.route('/meals/:year/:month')
         return;
     const dateYear = Number(req.params.year);
     const dateMonth = Number(req.params.month);
-    MealDB_1.default.MealModel.find({ dateYear, dateMonth }).exec()
+    MealDB_1.model.find({ dateYear, dateMonth }).exec()
         .then((value) => {
         if (value.length === 0)
             res.json({ message: 'No Meals' });
