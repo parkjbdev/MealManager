@@ -20,7 +20,7 @@ const storage = multer_1.default.diskStorage({
         callback(null, filename);
     }
 });
-const upload = multer_1.default({ storage: storage });
+const upload = multer_1.default({ storage });
 router.route('/process/NewMeal')
     .post(upload.single('newMealImg'), (req, res) => {
     const newMeal = new MealDB_1.default({

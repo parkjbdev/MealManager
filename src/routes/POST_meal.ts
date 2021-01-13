@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 		callback(null, filename);
 	}
 })
-const upload = multer({storage: storage})
+const upload = multer({storage})
 
 router.route('/process/NewMeal')
 	.post(upload.single('newMealImg'), (req, res) => {

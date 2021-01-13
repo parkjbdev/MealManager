@@ -8,7 +8,6 @@ export interface IMeal extends Document {
     menus: string[];
     snacks: string[];
     imgName: string;
-    imgPath: string;
 }
 export default IMeal;
 //# sourceMappingURL=Meal.d.ts.map

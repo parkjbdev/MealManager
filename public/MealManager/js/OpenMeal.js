@@ -26,11 +26,11 @@ async function createCardElem(meal) {
     h5.innerHTML = name;
 
     let pMenu = document.createElement('p');
-    pMenu.setAttribute('class', 'card-text');
+    pMenu.setAttribute('class', 'card-text lead');
     pMenu.innerHTML = menus;
 
     let pSnack = document.createElement('p');
-    pSnack.setAttribute('class', 'card-text');
+    pSnack.setAttribute('class', 'card-text lead');
     pSnack.innerHTML = snacks;
 
     let div_buttons = document.createElement('div')

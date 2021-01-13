@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IMeal } from "../../../interface/IMeal";
-declare const schema: mongoose.Schema<IMeal>;
+import { Meal } from "../../../interface/Meal";
+declare const schema: mongoose.Schema<Meal>;
 export default schema;
 //# sourceMappingURL=MealSchema.d.ts.map
