@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-declare const _default: {
-    MealModel: mongoose.Model<mongoose.Document<any>>;
-};
-export default _default;
+import Meal from "../interface/Meal";
+declare const model: mongoose.Model<Meal>;
+export default model;
 //# sourceMappingURL=MealDB.d.ts.map

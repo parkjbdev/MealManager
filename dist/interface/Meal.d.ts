@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-export interface IMeal extends Document {
+export interface Meal extends Document {
     name: string;
     dateYear: number;
     dateMonth: number;
@@ -10,5 +10,5 @@ export interface IMeal extends Document {
     imgName: string;
     imgPath: string;
 }
-export default IMeal;
+export default Meal;
 //# sourceMappingURL=Meal.d.ts.map

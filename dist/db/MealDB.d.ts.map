@@ -1,1 +1,1 @@
-{"version":3,"file":"MealDB.d.ts","sourceRoot":"","sources":["../../src/db/MealDB.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAA;;;;AAuB/B,wBAA0B"}
+{"version":3,"file":"MealDB.d.ts","sourceRoot":"","sources":["../../src/db/MealDB.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,UAAU,CAAA;AAG/B,OAAO,IAAI,MAAM,mBAAmB,CAAC;AAQrC,QAAA,MAAM,KAAK,sBAAuC,CAAA;AAElD,eAAe,KAAK,CAAA"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"MealSchema.d.ts","sourceRoot":"","sources":["../../../../src/db/MealDB/schema/MealSchema.ts"],"names":[],"mappings":"AAAA,OAAO,QAAkB,MAAM,UAAU,CAAC;AAC1C,OAAO,EAAC,KAAK,EAAC,MAAM,0BAA0B,CAAC;AAE/C,QAAA,MAAM,MAAM,EAAE,QAAQ,CAAC,MAAM,CAAC,KAAK,CASjC,CAAA;AAEF,eAAe,MAAM,CAAA"}

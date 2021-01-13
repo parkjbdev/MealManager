@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import {Document} from "mongoose";
 
-export interface IMeal extends mongoose.Document {
+export interface Meal extends Document {
 	name: string,
 	dateYear: number,
 	dateMonth: number,
@@ -11,3 +11,5 @@ export interface IMeal extends mongoose.Document {
 	imgName: string,
 	imgPath: string
 }
+
+export default Meal

@@ -4,23 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const dbAccessKey_json_1 = __importDefault(require("../auth/dbAccessKey.json"));
+const dbInfo_json_1 = __importDefault(require("../auth/dbInfo.json"));
+const MealSchema_1 = __importDefault(require("./schema/MealSchema"));
 // mongoDB Connection
-mongoose_1.default
-    .connect(dbAccessKey_json_1.default.connectionString + 'mealDB', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(value => console.log('connected to db server', value.connection.host))
-    .catch(error => console.error.bind(console, 'connection error'));
-const MealSchema = new mongoose_1.default.Schema({
-    name: { type: String, required: true, unique: true },
-    dateYear: { type: Number, required: true },
-    dateMonth: { type: Number, required: true },
-    dateDay: { type: Number, required: true },
-    mealType: { type: String, required: true },
-    menus: { type: [String] },
-    snacks: { type: [String] },
-    imgName: { type: String, required: true },
-    imgPath: { type: String, required: true }
-});
-const MealModel = mongoose_1.default.model('meal', MealSchema);
-exports.default = { MealModel };
+const conn = mongoose_1.default.createConnection(dbInfo_json_1.default.mealDBConnectionString, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+conn.once('open', () => console.log('connected to db server', conn.host));
+conn.once('error', error => console.error.bind(console, error));
+const model = conn.model('meal', MealSchema_1.default);
+exports.default = model;
 //# sourceMappingURL=MealDB.js.map

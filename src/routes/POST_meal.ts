@@ -1,10 +1,12 @@
-import express from "express";
+import {Router} from "express";
+
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import MealDB from "../db/MealDB";
 
-let router = express.Router()
+import MealDB from '../db/MealDB'
+
+let router = Router()
 const storage = multer.diskStorage({
 	destination(req, file, callback) {
 		const path = `./uploads/${req.body.newMealDateYear}/${req.body.newMealDateMonth}`
@@ -12,14 +14,15 @@ const storage = multer.diskStorage({
 		callback(null, path)
 	},
 	filename(req, file, callback) {
-		callback(null, `${req.body.newMealName}사진${path.extname(file.originalname)}`);
+		const filename = `${req.body.newMealName}사진${path.extname(file.originalname)}`
+		callback(null, filename);
 	}
 })
 const upload = multer({storage: storage})
 
 router.route('/process/NewMeal')
 	.post(upload.single('newMealImg'), (req, res) => {
-		const newMeal = new MealDB.MealModel({
+		const newMeal = new MealDB({
 			name: req.body.newMealName,
 			dateYear: req.body.newMealDateYear,
 			dateMonth: req.body.newMealDateMonth,
@@ -30,15 +33,16 @@ router.route('/process/NewMeal')
 			imgName: req.file.filename,
 			imgPath: req.file.path
 		})
-		newMeal.save().then(() => {
-			console.log('saved new meal')
-			console.log(newMeal)
-		})
-
-		res.statusCode = 200
-		res.setHeader('Content-Type', 'text/html;charset=utf8')
-		res.redirect('/MealManager')
-		res.end()
+		newMeal.save()
+			.then(() => {
+				res.statusCode = 200
+				console.log('saved new meal')
+				console.log(newMeal)
+			})
+			.catch()
+			.finally(() => {
+				res.redirect('/MealManager')
+			})
 	})
 
 export default {router}

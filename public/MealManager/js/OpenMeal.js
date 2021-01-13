@@ -1,6 +1,12 @@
 'use strict'
 
-function createCardElem(name, imgsrc, menus, snacks) {
+async function createCardElem(meal) {
+    const id = meal._id
+    const name = meal.name
+    const imgsrc = `./${meal.imgPath}`
+    const menus = meal.menus
+    const snacks = meal.snacks
+
     let div_col = document.createElement('div');
     div_col.setAttribute('class', 'col-sm-6 col-lg-4 mb-4');
 
@@ -42,6 +48,9 @@ function createCardElem(name, imgsrc, menus, snacks) {
     deleteButton.innerHTML = '삭제'
     deleteButton.onclick = () => {
         // TODO: HTTP DELETE
+        fetch(`./${id}`, {
+            method: 'Delete'
+        })
     }
 
     div_buttons.appendChild(modifyButton)
@@ -58,8 +67,7 @@ function createCardElem(name, imgsrc, menus, snacks) {
     return div_col;
 }
 
-function attachCard(name, imgsrc, menus, snacks) {
-    let card = createCardElem(name, imgsrc, menus, snacks)
+function attachCard(card) {
     document.getElementById('cards').appendChild(card)
 }
 
@@ -69,12 +77,7 @@ function openMeal(year, month) {
 
     fetch(jsonPath)
         .then(res => res.json())
-        .then(value => {
-            for (let i = 0; i < value.length; i++) {
-                let mealType = value[i].mealType
-                if (mealType === '점심') mealType = 'lunch'
-                else if (mealType === '저녁') mealType = 'dinner'
-                attachCard(value[i].name, `/MealManager/img/${value[i].dateYear}/${value[i].dateMonth}/${value[i].dateDay}/${mealType}`, value[i].menus, value[i].snacks)
-            }
-        })
+        .then(meals => meals.forEach(meal => {
+            createCardElem(meal).then(attachCard)
+        }))
 }
