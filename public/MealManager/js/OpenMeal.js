@@ -47,10 +47,12 @@ async function createCardElem(meal) {
     deleteButton.className = 'btn btn-outline-danger ms-1'
     deleteButton.innerHTML = '삭제'
     deleteButton.onclick = () => {
-        // TODO: HTTP DELETE
-        fetch(`./${id}`, {
-            method: 'Delete'
-        })
+        if (confirm(`${name} 삭제할까요?`)) {
+            fetch(`./${id}`, {
+                method: 'Delete'
+            }).then(alert(`${name} 삭제되었습니다`))
+            location.reload()
+        }
     }
 
     div_buttons.appendChild(modifyButton)

@@ -13,6 +13,7 @@ router.route('/meals/:year/:month')
     const dateYear = Number(req.params.year);
     const dateMonth = Number(req.params.month);
     MealDB_1.default.find({ dateYear, dateMonth })
+        // .sort({dateDay: 1, mealType: -1})
         .exec()
         .then((value) => {
         if (value.length === 0)

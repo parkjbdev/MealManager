@@ -10,6 +10,7 @@ router.route('/meals/:year/:month')
 		const dateMonth: number = Number(req.params.month)
 
 		MealDB.find({dateYear, dateMonth})
+			// .sort({dateDay: 1, mealType: -1})
 			.exec()
 			.then((value: Document[]) => {
 				if (value.length === 0) res.json({message: 'No Meals'})
