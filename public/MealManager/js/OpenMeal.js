@@ -8,7 +8,7 @@ async function createCardElem(meal) {
     const snacks = meal.snacks
 
     let div_col = document.createElement('div');
-    div_col.setAttribute('class', 'col-sm-6 col-lg-4 mb-4');
+    div_col.setAttribute('class', 'col-sm-6 col-lg-4 mb-4 meal-card');
 
     let div_card = document.createElement('div');
     div_card.setAttribute('class', 'card');
@@ -73,19 +73,35 @@ function attachCard(card) {
     document.getElementById('cards').appendChild(card)
 }
 
-function clearMeal() {
-    const cardsElem = document.getElementById('cards')
-    while(cardsElem.hasChildNodes())    cardsElem.removeChild(cardsElem.firstChild)
+function noMeal(message) {
+    const p = document.createElement('p')
+    p.className = 'fs-1 text-secondary'
+    p.innerHTML = message
+
+    const div = document.createElement('div')
+    div.className = 'position-absolute top-50 start-50 translate-middle'
+    div.appendChild(p)
+
+    return div
+}
+
+function cleardiv(elementId) {
+    const element = document.getElementById(elementId)
+    while(element.hasChildNodes())  element.removeChild(element.firstChild)
 }
 
 // FILE LOAD
 function openMeal(year, month) {
-    let jsonPath = `./meals/${year}/${month}/`
+    let jsonPath = `./meals/${year}/${month}/mealInfo`
 
     fetch(jsonPath)
         .then(res => res.json())
         .then(meals => {
-            if(meals.message !== undefined)  return
+            cleardiv('cardContainer')
+            if(meals.message !== undefined) {
+                document.getElementById('cardContainer').appendChild(noMeal(meals.message))
+                return
+            }
             meals.forEach(meal => {
                 createCardElem(meal).then(attachCard)
             })

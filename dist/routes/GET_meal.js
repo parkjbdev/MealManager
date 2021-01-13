@@ -6,18 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const MealDB_1 = __importDefault(require("../db/MealDB"));
 let router = express_1.Router();
-router.route('/meals/:year/:month')
+router.route('/meals/:year/:month/mealInfo')
     .get((req, res) => {
     if (req.params === undefined)
         return;
     const dateYear = Number(req.params.year);
     const dateMonth = Number(req.params.month);
     MealDB_1.default.find({ dateYear, dateMonth })
-        // .sort({dateDay: 1, mealType: -1})
+        .sort({ dateDay: 1, mealType: -1 })
         .exec()
         .then((value) => {
         if (value.length === 0)
-            res.json({ message: 'No Meals' });
+            res.json({ message: `${dateYear}년 ${dateMonth}월 식단을 추가하십시오` });
         else
             res.json(value);
         res.end();

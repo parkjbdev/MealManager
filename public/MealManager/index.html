@@ -11,23 +11,49 @@
 </head>
 <body>
 <!-- Header -->
-<header class="navbar navbar-light bg-light p-3">
-    <span class="navbar-brand mb-0 h1">식단관리</span>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newMealModal">
-        새 식단 추가
-    </button>
-</header>
-<div class="container">
-    <div class="input-group my-2">
-        <label for="openMealMonth" class="input-group-text">조회년월 선택</label>
-        <input id="openMealMonth" type="month" class="form-control">
-    </div>
-
-    <!-- Show Cards -->
-    <div class="">
-        <div id="cards" class="row" data-masonry='{"percentPosition": true }'>
-            <!-- CARDS -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">식단관리</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newMealModal">식단 추가</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">다운로드(추가예정)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/parkjbdev/MealManager">Source</a>
+                    </li>
+                </ul>
+                <div class="">
+                    <div class="input-group my-2">
+                        <label for="openMealMonth" class="input-group-text border-secondary bg-dark text-light">조회년월
+                            선택</label>
+                        <input id="openMealMonth" type="month" class="form-control border-secondary bg-dark text-light">
+                    </div>
+                </div>
+                <!--                <span class="navbar-text">Navbar text with an inline element</span>-->
+            </div>
         </div>
+    </nav>
+</header>
+
+<!-- Show Cards -->
+<div class="container my-3">
+    <div id="cards" class="row">
+        <!-- CARDS -->
+    </div>
+    <div id="cardContainer">
+        <!-- Message -->
     </div>
 </div>
 
@@ -129,31 +155,11 @@
     openMealMonth.onchange = () => {
         const year = parseInt(openMealMonth.value.substring(0, 4))
         const month = parseInt(openMealMonth.value.substring(5, 7))
-        clearMeal()
+        cleardiv('cards')
         openMeal(year, month)
     }
     openMeal(date.getFullYear(), date.getMonth() + 1)
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
-        integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
-        async></script>
-<!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.1.8/imagesloaded.pkgd.min.js"></script>-->
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        let $container = $("#cards");-->
-
-<!--        $container.imagesLoaded(function () {-->
-<!--            $container.masonry();-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
-
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--<script>-->
-<!--    $('div.card').fadeIn()-->
-<!--</script>-->
 
 </body>
 </html>
