@@ -29,6 +29,11 @@ app.use('/MealManager', getMeal.router)
 app.use('/MealManager', postMeal.router)
 app.use('/MealManager', deleteMeal.router)
 
+// 404 error handling
+app.use((req, res, next) => {
+	res.status(404).sendFile(path.join(__dirname, '../public/404.html'))
+})
+
 // Start Server
 app.listen(app.get('port'), () => {
 	console.log('listening')

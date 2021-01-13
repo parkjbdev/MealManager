@@ -36,12 +36,12 @@ async function createCardElem(meal) {
     let div_buttons = document.createElement('div')
     div_buttons.className = 'text-end'
 
-    let modifyButton = document.createElement('a')
-    modifyButton.className = 'btn btn-outline-primary ms-1'
-    modifyButton.innerHTML = '수정'
-    modifyButton.onclick = () => {
-        // TODO: HTTP PATCH
-    }
+    // let modifyButton = document.createElement('a')
+    // modifyButton.className = 'btn btn-outline-primary ms-1'
+    // modifyButton.innerHTML = '수정'
+    // modifyButton.onclick = () => {
+    //     // TODO: HTTP PATCH
+    // }
 
     let deleteButton = document.createElement('a')
     deleteButton.className = 'btn btn-outline-danger ms-1'
@@ -55,7 +55,7 @@ async function createCardElem(meal) {
         }
     }
 
-    div_buttons.appendChild(modifyButton)
+    // div_buttons.appendChild(modifyButton)
     div_buttons.appendChild(deleteButton)
 
     div_cardBody.appendChild(h5);
@@ -73,13 +73,21 @@ function attachCard(card) {
     document.getElementById('cards').appendChild(card)
 }
 
+function clearMeal() {
+    const cardsElem = document.getElementById('cards')
+    while(cardsElem.hasChildNodes())    cardsElem.removeChild(cardsElem.firstChild)
+}
+
 // FILE LOAD
 function openMeal(year, month) {
     let jsonPath = `./meals/${year}/${month}/`
 
     fetch(jsonPath)
         .then(res => res.json())
-        .then(meals => meals.forEach(meal => {
-            createCardElem(meal).then(attachCard)
-        }))
+        .then(meals => {
+            if(meals.message !== undefined)  return
+            meals.forEach(meal => {
+                createCardElem(meal).then(attachCard)
+            })
+        })
 }

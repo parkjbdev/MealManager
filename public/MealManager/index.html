@@ -17,11 +17,17 @@
         새 식단 추가
     </button>
 </header>
+<div class="container">
+    <div class="input-group my-2">
+        <label for="openMealMonth" class="input-group-text">조회년월 선택</label>
+        <input id="openMealMonth" type="month" class="form-control">
+    </div>
 
-<!-- Show Cards -->
-<div class="container py-5">
-    <div id="cards" class="row" data-masonry='{"percentPosition": true }'>
-        <!-- CARDS -->
+    <!-- Show Cards -->
+    <div class="">
+        <div id="cards" class="row" data-masonry='{"percentPosition": true }'>
+            <!-- CARDS -->
+        </div>
     </div>
 </div>
 
@@ -113,10 +119,19 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+<script src="./js/DateProto.js"></script>
 <script src="./js/NewMeal.js"></script>
 <script src="./js/OpenMeal.js"></script>
 <script>
-    date = new Date()
+    // date = new Date()
+    const openMealMonth = document.getElementById('openMealMonth')
+    openMealMonth.setAttribute('value', date.toMonthString('-'))
+    openMealMonth.onchange = () => {
+        const year = parseInt(openMealMonth.value.substring(0, 4))
+        const month = parseInt(openMealMonth.value.substring(5, 7))
+        clearMeal()
+        openMeal(year, month)
+    }
     openMeal(date.getFullYear(), date.getMonth() + 1)
 </script>
 
