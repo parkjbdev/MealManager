@@ -40,7 +40,9 @@ router.route('/process/NewMeal')
         console.log('saved new meal');
         console.log(newMeal);
     })
-        .catch()
+        .catch(error => {
+        console.log('error occurred:', error.code);
+    })
         .finally(() => {
         res.redirect('/MealManager');
     });

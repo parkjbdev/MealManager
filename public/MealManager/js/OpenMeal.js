@@ -73,14 +73,10 @@ function attachCard(card) {
     document.getElementById('cards').appendChild(card)
 }
 
-function noMeal(message) {
-    const p = document.createElement('p')
-    p.className = 'fs-1 text-secondary'
-    p.innerHTML = message
-
+function centerElem(element) {
     const div = document.createElement('div')
     div.className = 'position-absolute top-50 start-50 translate-middle'
-    div.appendChild(p)
+    div.appendChild(element)
 
     return div
 }
@@ -92,14 +88,29 @@ function cleardiv(elementId) {
 
 // FILE LOAD
 function openMeal(year, month) {
+    document.onreadystatechange = function() {
+        if(document.readyState !== 'complete') {
+            const msg = document.getElementById('message')
+
+            const sdiv = document.createElement('div')
+            sdiv.className = 'spinner-border m-5'
+            sdiv.setAttribute('role', 'status')
+
+            msg.appendChild(centerElem(sdiv))
+        }
+    }
     let jsonPath = `./meals/${year}/${month}/mealInfo`
 
     fetch(jsonPath)
         .then(res => res.json())
         .then(meals => {
-            cleardiv('cardContainer')
+            cleardiv('message')
             if(meals.message !== undefined) {
-                document.getElementById('cardContainer').appendChild(noMeal(meals.message))
+                const p = document.createElement('p')
+                p.className = 'fs-1 text-secondary'
+                p.innerHTML = meals.message
+
+                document.getElementById('message').appendChild(centerElem(p))
                 return
             }
             meals.forEach(meal => {
