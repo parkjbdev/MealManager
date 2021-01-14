@@ -29,7 +29,7 @@
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newMealModal">식단 추가</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">다운로드(추가예정)</a>
+                        <a class="nav-link" href="javascript:alert('추가예정');">다운로드(추가예정)</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://github.com/parkjbdev/MealManager">Source</a>
@@ -42,7 +42,6 @@
                         <input id="openMealMonth" type="month" class="form-control border-secondary bg-dark text-light">
                     </div>
                 </div>
-                <!--                <span class="navbar-text">Navbar text with an inline element</span>-->
             </div>
         </div>
     </nav>
@@ -162,12 +161,7 @@
 <script>
     const openMealMonth = document.getElementById('openMealMonth')
     openMealMonth.setAttribute('value', date.toMonthString('-'))
-    openMealMonth.onchange = () => {
-        const year = parseInt(openMealMonth.value.substring(0, 4))
-        const month = parseInt(openMealMonth.value.substring(5, 7))
-        cleardiv('cards')
-        openMeal(year, month)
-    }
+    openMealMonth.onchange = refreshMeal
     openMeal(date.getFullYear(), date.getMonth() + 1)
 </script>
 
