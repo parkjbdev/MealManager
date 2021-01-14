@@ -60,6 +60,13 @@ function newmenu() {
     inputElement.setAttribute('class', 'form-control');
     inputElement.setAttribute('name', 'menu');
     inputElement.setAttribute('placeholder', '메뉴 입력');
+    inputElement.onkeydown = (event) => {
+        const charCode = event.which || event.keyCode
+        if(!(event.shiftKey && charCode === 9) && (charCode === 9)) {
+            event.preventDefault()
+            newmenu()
+        }
+    }
 
     let div_button = document.createElement("div")
     div_button.setAttribute('class', 'input-group-btn')

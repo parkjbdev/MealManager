@@ -100,11 +100,13 @@
                             <div class="btn-group form-control" role="group"
                                  aria-label="Basic radio toggle button group" aria-required="true">
                                 <input type="radio" class="btn-check" name="mealType" id="lunchRadio"
-                                       autocomplete="off" value="lunch" onclick="onMealTypeChecked(this.value)" required>
+                                       autocomplete="off" value="lunch" onclick="onMealTypeChecked(this.value)"
+                                       required>
                                 <label class="btn btn-outline-primary" for="lunchRadio">점심</label>
 
                                 <input type="radio" class="btn-check" name="mealType" id="dinnerRadio"
-                                       autocomplete="off" value="dinner" onclick="onMealTypeChecked(this.value)" required>
+                                       autocomplete="off" value="dinner" onclick="onMealTypeChecked(this.value)"
+                                       required>
                                 <label class="btn btn-outline-primary" for="dinnerRadio">저녁</label>
                             </div>
                         </div>
@@ -150,7 +152,6 @@
 <script src="./js/NewMeal.js"></script>
 <script src="./js/OpenMeal.js"></script>
 <script>
-    // date = new Date()
     const openMealMonth = document.getElementById('openMealMonth')
     openMealMonth.setAttribute('value', date.toMonthString('-'))
     openMealMonth.onchange = () => {

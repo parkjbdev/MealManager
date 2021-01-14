@@ -26,11 +26,11 @@ async function createCardElem(meal) {
     h5.innerHTML = name;
 
     let pMenu = document.createElement('p');
-    pMenu.setAttribute('class', 'card-text lead');
+    pMenu.setAttribute('class', 'card-text fs-7 my-0');
     pMenu.innerHTML = menus;
 
     let pSnack = document.createElement('p');
-    pSnack.setAttribute('class', 'card-text lead');
+    pSnack.setAttribute('class', 'card-text fs-7 my-0');
     pSnack.innerHTML = snacks;
 
     let div_buttons = document.createElement('div')
@@ -44,7 +44,7 @@ async function createCardElem(meal) {
     // }
 
     let deleteButton = document.createElement('a')
-    deleteButton.className = 'btn btn-outline-danger ms-1'
+    deleteButton.className = 'btn btn-outline-danger ms-1 my-2'
     deleteButton.innerHTML = '삭제'
     deleteButton.onclick = () => {
         if (confirm(`${name} 삭제할까요?`)) {
