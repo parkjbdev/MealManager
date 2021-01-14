@@ -1,6 +1,5 @@
 import path from 'path'
 import express from 'express'
-import serve_static from 'serve-static'
 
 import getMeal from './routes/GET_meal'
 import postMeal from './routes/POST_meal'
