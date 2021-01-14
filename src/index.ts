@@ -5,6 +5,7 @@ import serve_static from 'serve-static'
 import getMeal from './routes/GET_meal'
 import postMeal from './routes/POST_meal'
 import deleteMeal from './routes/DELETE_meal'
+import session from "express-session";
 
 let app = express()
 
@@ -21,7 +22,21 @@ app.use('/', (req, res, next) => {
 })
 
 // view static html page
-app.use('/MealManager/uploads', serve_static(path.join(__dirname, '../uploads')))
+app.use('/MealManager/uploads', express.static(path.resolve(__dirname, '../uploads')))
+app.use(session({
+	cookie: undefined,
+	name: "",
+	proxy: false,
+	rolling: false,
+	saveUninitialized: false,
+	secret: 'dog',
+	store: undefined,
+	unset: undefined,
+	genid(req: express.Request): string {
+		return "";
+	},
+	resave: false
+}))
 app.use(express.static('public'))
 
 // routers

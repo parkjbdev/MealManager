@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
-const serve_static_1 = __importDefault(require("serve-static"));
 const GET_meal_1 = __importDefault(require("./routes/GET_meal"));
 const POST_meal_1 = __importDefault(require("./routes/POST_meal"));
 const DELETE_meal_1 = __importDefault(require("./routes/DELETE_meal"));
+const express_session_1 = __importDefault(require("express-session"));
 let app = express_1.default();
 app.set('port', process.env.PORT || 3000);
 // Middleware
@@ -20,7 +20,21 @@ app.use('/', (req, res, next) => {
     next();
 });
 // view static html page
-app.use('/MealManager/uploads', serve_static_1.default(path_1.default.join(__dirname, '../uploads')));
+app.use('/MealManager/uploads', express_1.default.static(path_1.default.resolve(__dirname, '../uploads')));
+app.use(express_session_1.default({
+    cookie: undefined,
+    name: "",
+    proxy: false,
+    rolling: false,
+    saveUninitialized: false,
+    secret: 'dog',
+    store: undefined,
+    unset: undefined,
+    genid(req) {
+        return "";
+    },
+    resave: false
+}));
 app.use(express_1.default.static('public'));
 // routers
 app.use('/MealManager', GET_meal_1.default.router);
