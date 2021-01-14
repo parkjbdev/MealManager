@@ -3,9 +3,27 @@
 let name;
 let date = new Date();
 let mealType = "";
+let menuCnt = 0;
+let snackCnt = 0;
 
-document.getElementById('newMealDate').value = date.toDateString('-')
-updateMealName();
+initModal()
+
+function initModal() {
+    document.getElementById('newMealForm').reset()
+    document.getElementById('menus').innerHTML = ''
+    document.getElementById('snacks').innerHTML = ''
+
+    date = new Date()
+    menuCnt = 0;
+    snackCnt = 0;
+    mealType = "";
+    newmenu()
+
+    document.getElementById('newMealDate').value = date.toDateString('-')
+    document.getElementById('previewImg').setAttribute('src', './img/no-image.png')
+
+    updateMealName()
+}
 
 function updateMealName() {
     if (mealType === "") name = date.toDateString() + " 급식";
@@ -18,8 +36,8 @@ function updateMealName() {
 }
 
 function translate(mealType) {
-    if(mealType === 'lunch')   return '점심'
-    else if(mealType === 'dinner')  return '저녁'
+    if (mealType === 'lunch') return '점심'
+    else if (mealType === 'dinner') return '저녁'
     else return mealType
 }
 
@@ -45,15 +63,10 @@ function loadImageFile(event) {
     }
 }
 
-let menuCnt = 0;
-let snackCnt = 0;
-
-if(menuCnt === 0)    newmenu()
-
 function newmenu() {
     menuCnt++;
     let div = document.createElement("div");
-    div.setAttribute('class', 'input-group my-2');
+    div.setAttribute('class', 'input-group my-2 newmenus');
 
     let inputElement = document.createElement("input");
     inputElement.setAttribute('type', 'text');
@@ -62,7 +75,7 @@ function newmenu() {
     inputElement.setAttribute('placeholder', '메뉴 입력');
     inputElement.onkeydown = (event) => {
         const charCode = event.which || event.keyCode
-        if(!(event.shiftKey && charCode === 9) && (charCode === 9)) {
+        if (!(event.shiftKey && charCode === 9) && (charCode === 9)) {
             event.preventDefault()
             newmenu()
         }
@@ -74,9 +87,8 @@ function newmenu() {
     let button = document.createElement("button");
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-outline-danger ms-2');
-    button.onclick = function() {
-        if(menuCnt - 1 === 0)
-        {
+    button.onclick = function () {
+        if (menuCnt - 1 === 0) {
             alert('최소 1개의 메뉴는 있어야 합니다!')
             return
         }
@@ -92,6 +104,7 @@ function newmenu() {
     document.getElementById('menus').appendChild(div);
     inputElement.focus();
 }
+
 function newsnack() {
     snackCnt++;
     let div = document.createElement("div");
@@ -109,7 +122,7 @@ function newsnack() {
     let button = document.createElement("button");
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-outline-danger ms-2');
-    button.onclick = function() {
+    button.onclick = function () {
         snackCnt--;
         document.getElementById('snacks').removeChild(div)
     }
@@ -122,3 +135,29 @@ function newsnack() {
     document.getElementById('snacks').appendChild(div);
     inputElement.focus();
 }
+
+$(document).ready(function () {
+    $('#newMealForm').submit(function (event) {
+        event.preventDefault();
+        const formData = new FormData(this)
+        const url = $(this).attr('action')
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                alert(data.message)
+                if (data.status === 200) {
+                    $('#newMealModal').modal('hide')
+                    initModal()
+                    refreshMeal()
+                }
+            },
+            error: (data) => {
+                alert(data)
+            },
+        })
+    })
+})

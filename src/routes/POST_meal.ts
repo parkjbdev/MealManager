@@ -33,17 +33,20 @@ router.route('/process/NewMeal')
 			imgName: req.file.filename,
 			imgPath: req.file.path
 		})
+		console.log(req.body)
 		newMeal.save()
 			.then(() => {
 				res.statusCode = 200
 				console.log('saved new meal')
 				console.log(newMeal)
+				res.json({"status": res.statusCode, "message": "식단을 성공적으로 추가했습니다"})
 			})
 			.catch(error => {
 				console.log('error occurred:', error.code)
+				if(error.code === 11000) res.json({"status": error.code, "message": "같은 날의 식단이 이미 존재합니다"})
+				else res.json({"status": error.code, "message": "unknown error"})
 			})
 			.finally(() => {
-				res.redirect('/MealManager')
 			})
 	})
 

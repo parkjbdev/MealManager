@@ -51,7 +51,7 @@ async function createCardElem(meal) {
             fetch(`./${id}`, {
                 method: 'Delete'
             }).then(alert(`${name} 삭제되었습니다`))
-            location.reload()
+            refreshMeal()
         }
     }
 
@@ -117,4 +117,11 @@ function openMeal(year, month) {
                 createCardElem(meal).then(attachCard)
             })
         })
+}
+
+function refreshMeal() {
+    const year = parseInt(openMealMonth.value.substring(0, 4))
+    const month = parseInt(openMealMonth.value.substring(5, 7))
+    cleardiv('cards')
+    openMeal(year, month)
 }
