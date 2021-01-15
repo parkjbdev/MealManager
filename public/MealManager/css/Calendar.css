@@ -1,4 +1,4 @@
-#Calendar {
+.calendar {
     /* grid */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -8,7 +8,7 @@
     /* style */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     border: 1px solid black;
-    max-width: 720px;
+    max-width: inherit;
     margin-left: auto;
     margin-right: auto;
 }

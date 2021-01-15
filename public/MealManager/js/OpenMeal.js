@@ -68,51 +68,46 @@ async function createCardElem(meal) {
 
     return div_col;
 }
-
-function attachCard(card) {
-    document.getElementById('cards').appendChild(card)
-}
-
-function centerElem(element) {
+async function createSpinner(){
     const div = document.createElement('div')
-    div.className = 'position-absolute top-50 start-50 translate-middle'
-    div.appendChild(element)
+    div.className = 'spinner-border m-5'
+    div.setAttribute('role', 'status')
 
     return div
 }
+async function createMessage(msg) {
+    const p = document.createElement('p')
+    p.className = 'fs-1 text-secondary'
+    p.innerHTML = msg
 
-function cleardiv(elementId) {
-    const element = document.getElementById(elementId)
-    while(element.hasChildNodes())  element.removeChild(element.firstChild)
+    return p
+}
+
+function attachCard(card) {
+    cards.appendChild(card)
+}
+function attachMessage(element) {
+    message.appendChild(element)
 }
 
 // FILE LOAD
 function openMeal(year, month) {
     document.onreadystatechange = function() {
-        if(document.readyState !== 'complete') {
-            const msg = document.getElementById('message')
-
-            const sdiv = document.createElement('div')
-            sdiv.className = 'spinner-border m-5'
-            sdiv.setAttribute('role', 'status')
-
-            msg.appendChild(centerElem(sdiv))
-        }
+        if(document.readyState !== 'complete')
+            createSpinner().then(centerElem).then(attachMessage)
     }
+
     let jsonPath = `./meals/${year}/${month}/mealInfo`
 
     fetch(jsonPath)
         .then(res => res.json())
         .then(meals => {
-            cleardiv('message')
+            clear(message)
             if(meals.message !== undefined) {
-                const p = document.createElement('p')
-                p.className = 'fs-1 text-secondary'
-                p.innerHTML = meals.message
-
-                document.getElementById('message').appendChild(centerElem(p))
+                createMessage(meals.message).then(centerElem).then(attachMessage)
                 return
             }
+            // updateCells(meals)
             meals.forEach(meal => {
                 createCardElem(meal).then(attachCard)
             })
@@ -120,8 +115,8 @@ function openMeal(year, month) {
 }
 
 function refreshMeal() {
-    const year = parseInt(openMealMonth.value.substring(0, 4))
-    const month = parseInt(openMealMonth.value.substring(5, 7))
-    cleardiv('cards')
+    const [year, month] = getDate(openMealMonth)
+
+    clear(cards)
     openMeal(year, month)
 }

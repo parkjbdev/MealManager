@@ -63,6 +63,7 @@ const getCalendarHTML = () => {
           calendar-cell
           this-month
         "
+        id="calCell_${d + 1}"
       >
         ${d + 1} ${today.getDate() === d + 1 ? ' today' : ''}
       </div>`
@@ -86,3 +87,11 @@ const getCalendarHTML = () => {
     }
     return calendarContents.join('');
 };
+//
+// function updateCells(meals) {
+//     meals.forEach(meal => {
+//         const div = document.createElement('div')
+//         div.innerHTML = meal.menus.join("\n")
+//         document.getElementById(`calCell_${meal.dateDay}`).appendChild(div)
+//     })
+// }
