@@ -18,7 +18,6 @@ router.route('/:mealId')
 						console.log(err) : console.log(`${path} deleted successfully`))
 				})
 			})
-			// .finally()
 	})
 
 export default {router}
