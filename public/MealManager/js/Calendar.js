@@ -87,11 +87,11 @@ const getCalendarHTML = () => {
     }
     return calendarContents.join('');
 };
-//
-// function updateCells(meals) {
-//     meals.forEach(meal => {
-//         const div = document.createElement('div')
-//         div.innerHTML = meal.menus.join("\n")
-//         document.getElementById(`calCell_${meal.dateDay}`).appendChild(div)
-//     })
-// }
+
+function updateCells(meals) {
+    meals.forEach(meal => {
+        const div = document.createElement('div')
+        div.innerHTML = meal.menus.join("\n")
+        document.getElementById(`calCell_${meal.dateDay}`).appendChild(div)
+    })
+}

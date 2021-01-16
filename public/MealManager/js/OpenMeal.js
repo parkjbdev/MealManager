@@ -50,8 +50,11 @@ async function createCardElem(meal) {
         if (confirm(`${name} 삭제할까요?`)) {
             fetch(`./${id}`, {
                 method: 'Delete'
-            }).then(alert(`${name} 삭제되었습니다`))
-            refreshMeal()
+            })
+                .then(alert(`${name} 삭제되었습니다`))
+                .then(refreshMeal)
+            // refreshMeal()
+            // TODO: server side waiting for delete completion
         }
     }
 
@@ -68,13 +71,15 @@ async function createCardElem(meal) {
 
     return div_col;
 }
-async function createSpinner(){
+
+async function createSpinner() {
     const div = document.createElement('div')
     div.className = 'spinner-border m-5'
     div.setAttribute('role', 'status')
 
     return div
 }
+
 async function createMessage(msg) {
     const p = document.createElement('p')
     p.className = 'fs-1 text-secondary'
@@ -86,14 +91,15 @@ async function createMessage(msg) {
 function attachCard(card) {
     cards.appendChild(card)
 }
+
 function attachMessage(element) {
     message.appendChild(element)
 }
 
 // FILE LOAD
 function openMeal(year, month) {
-    document.onreadystatechange = function() {
-        if(document.readyState !== 'complete')
+    document.onreadystatechange = function () {
+        if (document.readyState !== 'complete')
             createSpinner().then(centerElem).then(attachMessage)
     }
 
@@ -103,7 +109,7 @@ function openMeal(year, month) {
         .then(res => res.json())
         .then(meals => {
             clear(message)
-            if(meals.message !== undefined) {
+            if (meals.message !== undefined) {
                 createMessage(meals.message).then(centerElem).then(attachMessage)
                 return
             }

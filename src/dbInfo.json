@@ -1,0 +1,4 @@
+{
+  "connectionString": "mongodb+srv://admin:SOjTYzXufyFXaRge@cluster0.b8j6m.mongodb.net/",
+  "mealDBConnectionString": "mongodb+srv://admin:SOjTYzXufyFXaRge@cluster0.b8j6m.mongodb.net/mealDB"
+}
