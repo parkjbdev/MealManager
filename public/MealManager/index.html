@@ -62,18 +62,17 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mealModalLabel">새 식단 추가</h5>
+                <h5 class="modal-title" id="mealModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div>
-                    <form id="mealForm" class="row g-3 needs-validation" enctype="multipart/form-data"
-                          action="./process/NewMeal" method="post">
+                    <form id="mealForm" class="row g-3 needs-validation" enctype="multipart/form-data">
                         <!-- 제목 -->
-                        <input type="hidden" id="mealName" name="newMealName">
-                        <input type="hidden" id="mealDateYear" name="newMealDateYear">
-                        <input type="hidden" id="mealDateMonth" name="newMealDateMonth">
-                        <input type="hidden" id="mealDateDay" name="newMealDateDay">
+                        <input type="hidden" id="mealName" name="mealName">
+                        <input type="hidden" id="mealDateYear" name="mealDateYear">
+                        <input type="hidden" id="mealDateMonth" name="mealDateMonth">
+                        <input type="hidden" id="mealDateDay" name="mealDateDay">
 
                         <!-- 사진 -->
                         <div class="input my-1">
@@ -81,7 +80,7 @@
                                  class="mx-auto d-block img-fluid rounded"
                                  style="padding: 10px;"
                                  alt="Meal Image Preview">
-                            <input class="form-control" type="file" id="mealImg" name="newMealImg" accept="image/*"
+                            <input class="form-control" type="file" id="mealImg" name="mealImg" accept="image/*"
                                    onchange="loadImageFile(event)" required/>
                         </div>
 
@@ -89,7 +88,7 @@
                         <div class="input-group my-1">
                             <label for="mealDate" class="input-group-text">날짜 선택</label>
                             <input id="mealDate" type="date" class="form-control" onchange="onDateChanged()"
-                                   name="newMealDate" required>
+                                   name="mealDate" required>
                         </div>
 
                         <!-- 식사 종류 (점심/저녁) -->
@@ -149,6 +148,7 @@
 <script src="./js/utils.js"></script>
 <script src="./js/Connector.js"></script>
 <script src="./js/DateProto.js"></script>
+<script src="./js/Modal.js"></script>
 <script src="./js/OpenMeal.js"></script>
 <script src="./js/Calendar.js"></script>
 <script src="./js/NewMeal.js"></script>

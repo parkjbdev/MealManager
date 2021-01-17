@@ -20,8 +20,7 @@ router.route('/:mealId')
             fs_1.default.unlink(path, (err) => err ?
                 console.log(err) : console.log(`${path} deleted successfully`));
         });
-    })
-        .finally();
+    });
 });
 exports.default = { router };
 //# sourceMappingURL=DELETE_meal.js.map

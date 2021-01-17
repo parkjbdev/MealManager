@@ -52,8 +52,8 @@ async function createCardElem(meal) {
                 method: 'Delete'
             })
                 .then(alert(`${name} 삭제되었습니다`))
-                .then(refreshMeal)
-            // refreshMeal()
+                // .then(refreshMeal)
+            refreshMeal()
             // TODO: server side waiting for delete completion
         }
     }

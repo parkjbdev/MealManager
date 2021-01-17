@@ -9,24 +9,24 @@ import MealDB from '../db/MealDB'
 let router = Router()
 const storage = multer.diskStorage({
 	destination(req, file, callback) {
-		const path = `./uploads/${req.body.newMealDateYear}/${req.body.newMealDateMonth}`
+		const path = `./uploads/${req.body.mealDateYear}/${req.body.mealDateMonth}`
 		fs.mkdirSync(path, {recursive: true})
 		callback(null, path)
 	},
 	filename(req, file, callback) {
-		const filename = `${req.body.newMealName}사진${path.extname(file.originalname)}`
+		const filename = `${req.body.mealName}사진${path.extname(file.originalname)}`
 		callback(null, filename);
 	}
 })
 const upload = multer({storage})
 
 router.route('/process/NewMeal')
-	.post(upload.single('newMealImg'), (req, res) => {
+	.post(upload.single('mealImg'), (req, res) => {
 		const newMeal = new MealDB({
-			name: req.body.newMealName,
-			dateYear: req.body.newMealDateYear,
-			dateMonth: req.body.newMealDateMonth,
-			dateDay: req.body.newMealDateDay,
+			name: req.body.mealName,
+			dateYear: req.body.mealDateYear,
+			dateMonth: req.body.mealDateMonth,
+			dateDay: req.body.mealDateDay,
 			mealType: req.body.mealType,
 			menus: req.body.menu,
 			snacks: req.body.snack,
