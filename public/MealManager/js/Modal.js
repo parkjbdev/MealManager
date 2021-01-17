@@ -3,20 +3,50 @@ let mealType = "";
 let menuCnt = 0;
 let snackCnt = 0;
 
-function initModal() {
+function initModal(meal) {
     mealForm.reset()
-    clear(mealFormMenus)
-    clear(mealFormSnacks)
-    menuCnt = 0;
-    snackCnt = 0;
     mealType = "";
     date = new Date()
-    newMenu()
 
-    mealFormDate.value = date.toDateString('-')
-    mealFormPreviewImg.setAttribute('src', './img/no-image.png')
+    initImg()
+    initDate()
+    initMealType()
+    initMenus()
+    initSnacks()
 
     updateMealName()
+}
+
+function initImg(path) {
+    if(path === undefined)  path = './img/no-image.png'
+    mealFormPreviewImg.src = path
+}
+
+function initDate(date) {
+    if(date === undefined)  date = new Date()
+    mealFormDate.value = date.toDateString('-')
+}
+
+function initMealType(mealType) {
+    if(mealType === undefined)  return
+//    TODO: change selected radio button
+}
+
+function initMenus(menus) {
+    menuCnt = 0;
+    clear(mealFormMenus)
+    if(menus === undefined) {
+        newMenu()
+        return
+    }
+    menus.forEach(menu => newMenu(menu))
+}
+
+function initSnacks(snacks) {
+    snackCnt = 0;
+    clear(mealFormSnacks)
+    if(snacks === undefined)    return
+    snacks.forEach(snack => newSnack(snack))
 }
 
 function translate(mealType) {
