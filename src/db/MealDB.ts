@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import dbInfo from "../auth/dbInfo.json";
+import dbInfo from "../../auth/dbInfo.json";
 import MealSchema from "./schema/MealSchema";
 import Meal from "../interface/Meal";
 
