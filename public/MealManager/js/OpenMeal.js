@@ -36,12 +36,17 @@ async function createCardElem(meal) {
     let div_buttons = document.createElement('div')
     div_buttons.className = 'text-end'
 
-    // let modifyButton = document.createElement('a')
-    // modifyButton.className = 'btn btn-outline-primary ms-1'
-    // modifyButton.innerHTML = '수정'
-    // modifyButton.onclick = () => {
-    //     // TODO: HTTP PATCH
-    // }
+    let modifyButton = document.createElement('a')
+    modifyButton.className = 'btn btn-outline-primary ms-1'
+    modifyButton.innerHTML = '수정'
+    modifyButton.onclick = () => {
+        editMealModalInit(meal);
+        new bootstrap.Modal(mealModal).show();
+        mealForm.onsubmit = function(event) {
+            event.preventDefault();
+
+        }
+    }
 
     let deleteButton = document.createElement('a')
     deleteButton.className = 'btn btn-outline-danger ms-1 my-2'
@@ -58,7 +63,7 @@ async function createCardElem(meal) {
         }
     }
 
-    // div_buttons.appendChild(modifyButton)
+    div_buttons.appendChild(modifyButton)
     div_buttons.appendChild(deleteButton)
 
     div_cardBody.appendChild(h5);
