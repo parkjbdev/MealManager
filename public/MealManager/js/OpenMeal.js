@@ -63,7 +63,7 @@ async function createCardElem(meal) {
         }
     }
 
-    div_buttons.appendChild(modifyButton)
+    // div_buttons.appendChild(modifyButton)
     div_buttons.appendChild(deleteButton)
 
     div_cardBody.appendChild(h5);
