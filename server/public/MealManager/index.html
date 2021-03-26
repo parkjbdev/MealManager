@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>비젼 식단관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/Calendar.css">
+</head>
+<body>
+<!-- Header -->
+<header class="mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">식단관리</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#mealModal"
+                           onclick="newMealModalInit()">식단 추가</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:alert('추가예정');">다운로드(추가예정)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/parkjbdev/MealManager">Source</a>
+                    </li>
+                </ul>
+                <div>
+                    <div class="input-group my-2">
+                        <label for="openMealMonth" class="input-group-text border-secondary bg-dark text-light">조회년월
+                            선택</label>
+                        <input id="openMealMonth" type="month" class="form-control border-secondary bg-dark text-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Show Cards -->
+<div id="main" class="container">
+    <div id="cards" class="row">
+        <!-- CARDS -->
+    </div>
+    <div id="message">
+        <!-- Message -->
+    </div>
+</div>
+
+<!-- Meal Modal -->
+<div class="modal fade" id="mealModal" tabindex="-1" aria-labelledby="mealModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mealModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form id="mealForm" class="row g-3 needs-validation" enctype="multipart/form-data">
+                        <!-- 제목 -->
+                        <input type="hidden" id="mealName" name="mealName">
+                        <input type="hidden" id="mealDateYear" name="mealDateYear">
+                        <input type="hidden" id="mealDateMonth" name="mealDateMonth">
+                        <input type="hidden" id="mealDateDay" name="mealDateDay">
+
+                        <!-- 사진 -->
+                        <div class="input my-1">
+                            <img id="previewImg" class="mx-auto d-block img-fluid rounded" style="padding: 10px;"
+                                 alt="Meal Image Preview">
+                            <input id="mealImg" class="form-control" type="file" id="mealImg" name="mealImg"
+                                   accept="image/*" onchange="loadImageFile(event)" required/>
+                        </div>
+
+                        <!-- 날짜 -->
+                        <div class="input-group my-1">
+                            <label for="mealDate" class="input-group-text">날짜 선택</label>
+                            <input id="mealDate" type="date" class="form-control" onchange="onDateChanged()"
+                                   name="mealDate" required>
+                        </div>
+
+                        <!-- 식사 종류 (점심/저녁) -->
+                        <div id="selectMealType" class="input-group my-1">
+                            <span class="form-label input-group-text" style="margin: 0;">식사 종류</span>
+                            <div class="btn-group form-control" role="group"
+                                 aria-label="Basic radio toggle button group" aria-required="true">
+                                <input type="radio" class="btn-check" name="mealType" id="mealTypeLunchRadio"
+                                       autocomplete="off" value="lunch" onclick="onMealTypeChecked(this.value)"
+                                       required>
+                                <label class="btn btn-outline-primary" for="mealTypeLunchRadio">점심</label>
+
+                                <input type="radio" class="btn-check" name="mealType" id="mealTypeDinnerRadio"
+                                       autocomplete="off" value="dinner" onclick="onMealTypeChecked(this.value)"
+                                       required>
+                                <label class="btn btn-outline-primary" for="mealTypeDinnerRadio">저녁</label>
+                            </div>
+                        </div>
+
+                        <!-- 메뉴명 -->
+                        <div class="my-1">
+                            <div id="menus"></div>
+                            <div class="d-grid gap-2 my-1">
+                                <button type="button" class="btn btn-outline-primary" onclick="newMenu()">
+                                    메뉴 추가
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 간식 -->
+                        <div class="my-1">
+                            <!-- snack names -->
+                            <div id="snacks" class=""></div>
+                            <div class="d-grid gap-2 my-1">
+                                <button type="button" class="btn btn-outline-primary" onclick="newSnack()">
+                                    간식 추가
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- TODO: validation -->
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="submit" class="btn btn-primary" form="mealForm">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/Connector.js"></script>
+<script src="./js/DateProto.js"></script>
+<script src="./js/Modal.js"></script>
+<script src="./js/OpenMeal.js"></script>
+<script src="./js/Calendar.js"></script>
+<!--<script src="https://unpkg.com/scrollreveal"></script>-->
+<!--<script>-->
+<!--    ScrollReveal().reveal('.card', {duration: 500, interval: 500});-->
+<!--</script>-->
+<!--<script>-->
+<!--    renderCalendar(calendar);-->
+<!--</script>-->
+<script>
+    function calendar() {
+        const div = document.createElement('div')
+        div.className = 'calendar'
+        renderCalendar(div)
+
+        return div
+    }
+</script>
+<script>
+    openMealMonth.value = date.toMonthString('-')
+    openMealMonth.onchange = refreshMeal
+    openMeal(getYear(openMealMonth), getMonth(openMealMonth))
+</script>
+
+</body>
+</html>
