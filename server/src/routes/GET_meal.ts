@@ -1,8 +1,7 @@
 import {Router} from "express";
 import MealDB from '../db/MealDB'
 
-let router = Router()
-
+const router = Router()
 router.route('/meals/:year/:month/')
 	.get((req, res) => {
 		if (req.params === undefined) return
@@ -12,7 +11,7 @@ router.route('/meals/:year/:month/')
 		MealDB.find({dateYear, dateMonth})
 			.sort({dateDay: 1, mealType: -1})
 			.exec()
-			.then((value: Document[]) => {
+			.then((value) => {
 				if (value.length === 0) res.json({message: `${dateYear}년 ${dateMonth}월 식단을 추가하십시오`})
 				else res.json(value)
 				res.end()

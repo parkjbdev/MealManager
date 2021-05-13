@@ -1,12 +1,10 @@
 import {Router} from "express";
-
+import MealDB from '../db/MealDB'
 import multer from "multer";
 import fs from "fs";
 import path from "path";
 
-import MealDB from '../db/MealDB'
-
-let router = Router()
+const router = Router()
 const storage = multer.diskStorage({
 	destination(req, file, callback) {
 		const path = `./uploads/${req.body.mealDateYear}/${req.body.mealDateMonth}`
@@ -41,7 +39,7 @@ router.route('/process/NewMeal')
 				console.log(newMeal)
 				res.json({"status": res.statusCode, "message": "식단을 성공적으로 추가했습니다"})
 			})
-			.catch(error => {
+			.catch((error: { code: number; }) => {
 				console.log('error occurred:', error.code)
 				if(error.code === 11000) res.json({"status": error.code, "message": "같은 날의 식단이 이미 존재합니다"})
 				else res.json({"status": error.code, "message": "unknown error"})

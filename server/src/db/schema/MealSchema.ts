@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import Meal from "../../interface/Meal";
+import MealInterface from "./MealInterface";
 
-const schema: mongoose.Schema<Meal> = new mongoose.Schema({
+const schema: mongoose.Schema<MealInterface> = new mongoose.Schema({
 	name: {type: String, required: true, unique: true},
 	dateYear: {type: Number, required: true},
 	dateMonth: {type: Number, required: true},

@@ -1,6 +1,6 @@
 import {Document} from "mongoose";
 
-export interface Meal extends Document {
+export interface MealInterface extends Document {
 	name: string,
 	dateYear: number,
 	dateMonth: number,
@@ -12,4 +12,4 @@ export interface Meal extends Document {
 	imgPath: string
 }
 
-export default Meal
+export default MealInterface

@@ -1,6 +1,5 @@
 .idea/
-node_modules/
-auth/
-client/build
-server/uploads/
-server/dist/
+/server/dist/
+/server/node_modules/
+/server/uploads/
+/server/src/auth/
