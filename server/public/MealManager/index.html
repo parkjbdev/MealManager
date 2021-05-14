@@ -80,7 +80,7 @@
                             <img id="previewImg" class="mx-auto d-block img-fluid rounded" style="padding: 10px;"
                                  alt="Meal Image Preview">
                             <input id="mealImg" class="form-control" type="file" id="mealImg" name="mealImg"
-                                   accept="image/*" onchange="loadImageFile(event)" required/>
+                                   accept="image/*" required/>
                         </div>
 
                         <!-- 날짜 -->
@@ -156,19 +156,47 @@
 <!--<script>-->
 <!--    renderCalendar(calendar);-->
 <!--</script>-->
-<script>
-    function calendar() {
-        const div = document.createElement('div')
-        div.className = 'calendar'
-        renderCalendar(div)
+<!--<script>-->
+<!--    function calendar() {-->
+<!--        const div = document.createElement('div')-->
+<!--        div.className = 'calendar'-->
+<!--        renderCalendar(div)-->
 
-        return div
-    }
-</script>
+<!--        return div-->
+<!--    }-->
+<!--</script>-->
 <script>
     openMealMonth.value = date.toMonthString('-')
     openMealMonth.onchange = refreshMeal
     openMeal(getYear(openMealMonth), getMonth(openMealMonth))
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+<script>
+    function autoSetMealInfo(e)
+    {
+        const file = e.target.files[0]
+        if (file && file.name) {
+            EXIF.getData(file, function () {
+                const exifData = this.exifdata
+                if (exifData) {
+                    datetime = exifData.DateTime.split(/\s|:/).map(x => parseInt(x))
+                    date = new Date(datetime[0], datetime[1] - 1, datetime[2], datetime[3], datetime[4], datetime[5])
+
+                    setMealDate(date)
+                    if (datetime[3] < 15) setMealType('lunch')
+                    if (datetime[3] > 15) setMealType('dinner')
+                    updateMealName()
+                }
+                else alert("No EXIF data found in image '" + file.name + "'.");
+            });
+        }
+    }
+
+    mealImg.onchange = function (e) {
+        loadImageFile(e)
+        autoSetMealInfo(e);
+    }
 </script>
 
 </body>

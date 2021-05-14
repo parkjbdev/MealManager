@@ -70,35 +70,35 @@ function initModal(meal) {
     mealFormDinnerRadio.disabled = false
 
     if (meal === undefined) {
-        initImg()
-        initDate()
-        initMealType()
-        initMenus()
-        initSnacks()
+        setMealImg()
+        setMealDate()
+        setMealType()
+        setMenus()
+        setSnacks()
     } else {
-        initImg(`./${meal.imgPath}`)
-        initDate(new Date(meal.dateYear, meal.dateMonth - 1, meal.dateDay))
-        initMealType(meal.mealType)
-        initMenus(meal.menus)
-        initSnacks(meal.snacks)
+        setMealImg(`./${meal.imgPath}`)
+        setMealDate(new Date(meal.dateYear, meal.dateMonth - 1, meal.dateDay))
+        setMealType(meal.mealType)
+        setMenus(meal.menus)
+        setSnacks(meal.snacks)
     }
 
     updateMealName()
     updateDate()
 }
 
-function initImg(path) {
+function setMealImg(path) {
     if (path === undefined) path = './img/no-image.png'
     mealFormPreviewImg.src = path
 }
 
-function initDate(_date) {
+function setMealDate(_date) {
     if (_date === undefined) modalDate = new Date()
     else modalDate = _date
     mealFormDate.value = modalDate.toDateString('-')
 }
 
-function initMealType(_mealType) {
+function setMealType(_mealType) {
     if (_mealType === undefined) {
         mealType = ""
         return
@@ -108,7 +108,7 @@ function initMealType(_mealType) {
     else if (mealType === 'dinner') mealFormDinnerRadio.checked = true
 }
 
-function initMenus(menus) {
+function setMenus(menus) {
     menuCnt = 0;
     clear(mealFormMenus)
     if (menus === undefined) {
@@ -118,7 +118,7 @@ function initMenus(menus) {
     menus.forEach(menu => newMenu(menu))
 }
 
-function initSnacks(snacks) {
+function setSnacks(snacks) {
     snackCnt = 0;
     clear(mealFormSnacks)
     if (snacks === undefined) return
@@ -243,4 +243,3 @@ function newSnack(value) {
     mealFormSnacks.appendChild(div);
     inputElement.focus();
 }
-
