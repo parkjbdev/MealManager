@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from '../resource/svg/logo.svg';
+import React, {useState} from 'react';
 import '../resource/stylesheet/App.css';
+import ShowMeals from "./Meal/ShowMeals/ShowMeals";
+import SelectMealMonth from "./Meal/ShowMeals/SelectMealMonth";
+import NewMealForm from "./Meal/NewMealForm/NewMealForm";
 
 function App() {
+  const [selectedMonth, setSelectedMonth] = useState(new Date());
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SelectMealMonth month={selectedMonth} onChange={setSelectedMonth}/>
+      <ShowMeals year={selectedMonth.getFullYear()} month={selectedMonth.getMonth() + 1}/>
+      
+      <NewMealForm />
     </div>
   );
 }
