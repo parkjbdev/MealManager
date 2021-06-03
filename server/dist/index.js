@@ -20,7 +20,7 @@ app.use('/', (req, res, next) => {
     next();
 });
 // view static html page
-app.use('/MealManager/uploads', express_1.default.static(path_1.default.resolve(__dirname, '../uploads')));
+app.use('/uploads', express_1.default.static(path_1.default.resolve(__dirname, '../uploads')));
 app.use(express_session_1.default({
     cookie: undefined,
     name: "",
@@ -36,10 +36,11 @@ app.use(express_session_1.default({
     resave: false
 }));
 app.use(express_1.default.static('public'));
+// app.use(express.static('../client/build'))
 // routers
-app.use('/MealManager', GET_meal_1.default.router);
-app.use('/MealManager', POST_meal_1.default.router);
-app.use('/MealManager', DELETE_meal_1.default.router);
+app.use(GET_meal_1.default.router);
+app.use(POST_meal_1.default.router);
+app.use(DELETE_meal_1.default.router);
 // 404 error handling
 app.use((req, res, next) => {
     res.status(404).sendFile(path_1.default.join(__dirname, '../public/404.html'));

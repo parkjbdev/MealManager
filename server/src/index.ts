@@ -21,7 +21,7 @@ app.use('/', (req, res, next) => {
 })
 
 // view static html page
-app.use('/MealManager/uploads', express.static(path.resolve(__dirname, '../uploads')))
+app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')))
 app.use(session({
 	cookie: undefined,
 	name: "",
@@ -36,12 +36,15 @@ app.use(session({
 	},
 	resave: false
 }))
-app.use(express.static('public'))
+
+// Set FrontEnd page
+app.use(express.static('public')) // vanillaJS
+// app.use(express.static('../client/build')) // React
 
 // routers
-app.use('/MealManager', getMeal.router)
-app.use('/MealManager', postMeal.router)
-app.use('/MealManager', deleteMeal.router)
+app.use(getMeal.router)
+app.use(postMeal.router)
+app.use(deleteMeal.router)
 
 // 404 error handling
 app.use((req, res, next) => {

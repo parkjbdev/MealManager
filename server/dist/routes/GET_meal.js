@@ -15,10 +15,7 @@ router.route('/meals/:year/:month/').get((req, res) => {
         .sort({ dateDay: 1, mealType: -1 })
         .exec()
         .then((value) => {
-        if (value.length === 0)
-            res.json({ message: `${dateYear}년 ${dateMonth}월 식단을 추가하십시오` });
-        else
-            res.json(value);
+        res.json(value);
         res.end();
         return;
     });
