@@ -16,7 +16,7 @@ const InputDate = (props: { date: MaterialUiPickersDate, onChange: Function }) =
           }}
           format="yyyy년 MM월 dd일"
         />
-      </ MuiPickersUtilsProvider>
+      </MuiPickersUtilsProvider>
     </ThemeProvider>
   )
 }

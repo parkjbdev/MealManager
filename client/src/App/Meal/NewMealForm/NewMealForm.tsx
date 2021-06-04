@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import noimg from "../../../resource/img/no-image.png"
 import FormTitle from "./FormTitle";
 import {InputImage, PreviewImage} from "./ImageComponent";
@@ -10,6 +10,22 @@ const NewMealForm = () => {
   const [img, setImg] = useState<string>(noimg)
   const [date, setDate] = useState<Date>(new Date())
   const [mealType, setMealType] = useState<string>('')
+  
+  useEffect(() => {
+    updateTitle()
+  }, [date, mealType])
+  
+  const updateTitle = () => {
+    const dateYear = date.getFullYear().toString()
+    const dateMonth = (date.getMonth() + 1).toString().padStart(2, '0')
+    const dateDate = date.getDate().toString().padStart(2, '0')
+    
+    let titleMealType = ''
+    if (mealType == 'lunch') titleMealType = '점심'
+    else if (mealType == 'dinner') titleMealType = '저녁'
+    
+    setTitle(`${dateYear}${dateMonth}${dateDate} ${titleMealType}급식`)
+  }
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.files ?
@@ -46,11 +62,11 @@ const NewMealForm = () => {
         <MealTypeRadio selected={mealType} onChange={handleMealTypeChange}/>
         
         {/*/!*메뉴명*!/*/}
-        // TODO: add InputText & AddButton
+        {/*TODO: add InputText & AddButton*/}
         
         {/*/!*간식*!/*/}
-        // TODO: add InputText & AddButton
-
+        {/*TODO: add InputText & AddButton*/}
+      
       </form>
     </div>
   );

@@ -1,11 +1,18 @@
-import {CardActionArea, Fab} from "@material-ui/core";
+import {CardActionArea, Fab, makeStyles} from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import React from "react";
 
+const useStyles = makeStyles({
+  cardActionArea: {
+    width: "fit-content"
+  }
+})
+
 const PreviewImage = (props: { file: string }) => {
+  const classes = useStyles()
   return (
     <div>
-      <CardActionArea>
+      <CardActionArea className={classes.cardActionArea}>
         <img height="100%" src={props.file} alt=""/>
       </CardActionArea>
     </div>
