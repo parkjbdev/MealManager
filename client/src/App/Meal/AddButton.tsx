@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const AddButton = (props: { onClick: Function }) => {
   return (
-    <div>
+    <>
       <button type="button"
               style={{display: "none"}}
               id="add-button"
@@ -17,7 +17,7 @@ const AddButton = (props: { onClick: Function }) => {
           <AddIcon/>
         </Fab>
       </label>
-    </div>
+    </>
   );
 };
 
