@@ -11,6 +11,8 @@ const InputDate = (props: { date: MaterialUiPickersDate, onChange: Function }) =
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           value={props.date}
+          margin="normal"
+          label="날짜 선택"
           onChange={date => {
             props.onChange(date)
           }}
