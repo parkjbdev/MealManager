@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import NewMealForm from "./NewMealForm/NewMealForm";
-import {Backdrop, createStyles, Fab, Fade, makeStyles, Modal, Theme} from "@material-ui/core";
-import AddButton from "./AddButton";
+import {Backdrop, createStyles, Fade, makeStyles, Modal, Theme} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,26 +18,21 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const NewMealFormModal = (props: {className: any}) => {
+const NewMealFormModal = (props: {open: boolean, handleClose: Function, className?: string}) => {
   const classes = useStyles()
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
   return (
     <div className={props.className}>
-      <AddButton onClick={handleOpen}/>
-      
       <Modal aria-labelledby="transition-modal-title"
              aria-describedby="transition-modal-description"
              className={classes.modal}
-             open={open}
-             onClose={handleClose}
+             open={props.open}
+             onClose={() => props.handleClose()}
              closeAfterTransition
              BackdropComponent={Backdrop}
              BackdropProps={{
                timeout: 500,
              }}>
-        <Fade in={open}>
+        <Fade in={props.open}>
           <div className={classes.paper}>
             <NewMealForm/>
           </div>
@@ -46,6 +40,10 @@ const NewMealFormModal = (props: {className: any}) => {
       </Modal>
     </div>
   );
+};
+
+NewMealFormModal.defaultProps = {
+  className: ''
 };
 
 export default NewMealFormModal;

@@ -2,9 +2,9 @@ import React from 'react';
 import {Fab} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
-const AddButton = (props: { onClick: Function }) => {
+const AddButton = (props: { className?: string, onClick: Function }) => {
   return (
-    <>
+    <div className={props.className}>
       <button type="button"
               style={{display: "none"}}
               id="add-button"
@@ -17,8 +17,12 @@ const AddButton = (props: { onClick: Function }) => {
           <AddIcon/>
         </Fab>
       </label>
-    </>
+    </div>
   );
+};
+
+AddButton.defaultProps = {
+  className: ''
 };
 
 export default AddButton;
