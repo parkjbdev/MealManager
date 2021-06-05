@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import noimg from "../../../resource/img/no-image.png"
 import FormTitle from "./FormTitle";
 import InputImage from "./InputImage";
 import InputDate from "./InputDate";
 import MealTypeRadio from "./MealTypeRadio";
-import {Button, Container} from "@material-ui/core";
+import {Button, Container, makeStyles} from "@material-ui/core";
+import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 
-const NewMealForm = () => {
+const useStyles = makeStyles({
+  formButtons: {
+    display: "flex",
+    justifyContent: "right"
+  }
+})
+
+const NewMealForm = (props: { handleClose: Function }) => {
+  const classes = useStyles()
   const [title, setTitle] = useState('')
   const [img, setImg] = useState<string>('')
   const [date, setDate] = useState<Date>(new Date())
@@ -30,10 +38,10 @@ const NewMealForm = () => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.target.files ?
       setImg(URL.createObjectURL(event.target.files[0])) :
-      setImg(noimg)
+      setImg('')
   };
   
-  const handleDateChange = (date: Date) => {
+  const handleDateChange = (date: MaterialUiPickersDate)  => {
     date ?
       setDate(date) :
       setDate(new Date())
@@ -51,7 +59,7 @@ const NewMealForm = () => {
         {/*/!*제목*!/*/}
         <FormTitle title={title}/>
         
-        {/*/!*사진*!/*/}
+        {/*사진*/}
         <InputImage onChange={handleImageChange} file={img}/>
         
         {/*날짜*/}
@@ -67,8 +75,9 @@ const NewMealForm = () => {
         {/*TODO: add InputText & AddButton*/}
       
       </form>
-      <div>
-        <Button>취소</Button>
+      
+      <div className={classes.formButtons}>
+        <Button onClick={() => props.handleClose()}>취소</Button>
         <Button color="primary">확인</Button>
       </div>
     </Container>

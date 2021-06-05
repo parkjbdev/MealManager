@@ -5,8 +5,21 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 const useStyles = makeStyles({
   cardActionArea: {
     width: "fit-content",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "darkgray"
   },
   addIcon: {
+    width: "3em",
+    height: "3em",
+    margin: "5em",
+    color: "whitesmoke"
+  },
+  img: {
+    // width: "inherit"
+    maxWidth: "30%",
+    maxHeight: "50%"
   }
 })
 
@@ -33,7 +46,7 @@ const InputImage = (props: { onChange: Function, file: string }) => {
         {
           props.file === '' ?
             <AddAPhotoIcon className={classes.addIcon}/> :
-            <img width="1000px" src={props.file} alt=""/>
+            <img className={classes.img} src={props.file} alt=""/>
         }
       </CardActionArea>
     </div>
