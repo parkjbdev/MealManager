@@ -1,86 +1,119 @@
-import React from 'react'
-import * as Material from '@material-ui/core'
+import React, {useState} from 'react'
+import clsx from 'clsx';
 import * as MaterialStyle from '@material-ui/core/styles'
-import * as MaterialIcon from '@material-ui/icons'
+import {
+  AppBar,
+  Container,
+  CssBaseline,
+  IconButton,
+  Slide,
+  Toolbar,
+  Typography,
+  useScrollTrigger
+} from "@material-ui/core";
+import MenuIcon from '@material-ui/icons/Menu'
+import AppDrawer from "./Drawer";
+import App from "../App/App";
 
-
+const drawerWidth = 240
 const style = (theme: MaterialStyle.Theme) =>
-	MaterialStyle.createStyles({
-		root: {
-			flexGrow: 1,
-		},
-		menuButton: {
-			marginRight: theme.spacing(2),
-		},
-		title: {
-			flexGrow: 1,
-		},
-	})
+  MaterialStyle.createStyles({
+    root: {
+      flexGrow: 1,
+      display: 'flex'
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    appBar: {
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+  })
 
 const useStyles = MaterialStyle.makeStyles(style)
 
-interface AppBarProp {
-	title: string
+function HideOnScroll(props: { children: React.ReactElement }) {
+  const trigger = useScrollTrigger();
+  
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {props.children}
+    </Slide>
+  );
 }
 
-interface Props {
-	/**
-	 * Injected by the documentation to work in an iframe.
-	 * You won't need it on your project.
-	 */
-	window?: () => Window;
-	children: React.ReactElement;
-}
-
-function HideOnScroll(props: Props) {
-	const {children, window} = props;
-	// Note that you normally won't need to set the window ref as useScrollTrigger
-	// will default to window.
-	// This is only being set here because the demo is in an iframe.
-	const trigger = Material.useScrollTrigger({target: window ? window() : undefined});
-
-	return (
-		<Material.Slide appear={false} direction="down" in={!trigger}>
-			{children}
-		</Material.Slide>
-	);
-}
-
-export default function AppBar(props: AppBarProp) {
-	const classes = useStyles();
-
-	return (
-		<div className={classes.root}>
-			<React.Fragment>
-				<Material.CssBaseline/>
-
-				<HideOnScroll {...props}>
-					<Material.AppBar>
-						<Material.Toolbar>
-							<Material.IconButton edge="start" className={classes.menuButton} color="inherit"
-												 aria-label="menu">
-								<MaterialIcon.Menu/>
-							</Material.IconButton>
-							<Material.Typography variant="h6">{props.title}</Material.Typography>
-						</Material.Toolbar>
-					</Material.AppBar>
-				</HideOnScroll>
-
-				<Material.Toolbar/>
-
-				<Material.Container>
-					<Material.Box my={2}>
-						{[...new Array(12)]
-							.map(
-								() => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-							)
-							.join('\n')}
-					</Material.Box>
-				</Material.Container>
-			</React.Fragment>
-		</div>
-	);
+export default function MainAppBar(props: { title: string }) {
+  const classes = useStyles();
+  const [menuOpen, setMenuOpen] = useState(false)
+  
+  const handleDrawerOpen = () => {
+    setMenuOpen(true)
+  }
+  const handleDrawerClose = () => {
+    setMenuOpen(false)
+  }
+  
+  return (
+    <div className={classes.root}>
+      <CssBaseline/>
+      
+      {/* App Bar */}
+      <HideOnScroll {...props}>
+        <AppBar className={clsx(classes.appBar, {
+          [classes.appBarShift]: menuOpen,
+        })}>
+          <Toolbar>
+            <IconButton edge="start" className={classes.menuButton} color="inherit"
+                        aria-label="menu" onClick={handleDrawerOpen}>
+              <MenuIcon/>
+            </IconButton>
+            <Typography variant="h6">{props.title}</Typography>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      
+      {/* Drawer Menu */}
+      <AppDrawer open={menuOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose}/>
+      
+      {/* Main Content */}
+      <main className={clsx(classes.content, {
+        [classes.contentShift]: menuOpen,
+      })}>
+        <Toolbar/>
+        <Container>
+          <App/>
+        </Container>
+      </main>
+    </div>
+  );
 }
