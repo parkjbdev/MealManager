@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './resource/stylesheet/index.css';
 import reportWebVitals from './reportWebVitals';
-import AppBar from "./modules/AppBar";
+import App from './App/App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppBar title="Photos"/>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

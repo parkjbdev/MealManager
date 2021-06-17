@@ -1,6 +1,5 @@
 import React from 'react';
-import {Divider, Drawer, IconButton, List, makeStyles, useTheme} from "@material-ui/core";
-import * as MaterialStyle from "@material-ui/core/styles";
+import {createStyles, Divider, Drawer, IconButton, List, makeStyles, Theme, useTheme} from "@material-ui/core";
 import DrawerListItem from "./DrawerListItem";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -10,30 +9,27 @@ import DownloadIcon from "@material-ui/icons/GetApp"
 import InfoIcon from '@material-ui/icons/Info';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-const drawerWidth = 240
-
-const style = (theme: MaterialStyle.Theme) =>
-  MaterialStyle.createStyles({
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-  })
-
+const drawerWidth = 300
+const style = (theme: Theme) => createStyles({
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+})
 const useStyles = makeStyles(style)
 
-const AppDrawer = (props: { open: boolean, handleDrawerClose: () => void, handleDrawerOpen: () => void }) => {
+const AppDrawer = (props: { menuOpen: boolean, handleDrawerClose: () => void, handleDrawerOpen: () => void }) => {
   const classes = useStyles();
   const theme = useTheme();
   
@@ -44,7 +40,7 @@ const AppDrawer = (props: { open: boolean, handleDrawerClose: () => void, handle
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={props.open}
+        open={props.menuOpen}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -59,18 +55,18 @@ const AppDrawer = (props: { open: boolean, handleDrawerClose: () => void, handle
         {/* Drawer */}
         <Divider/>
         <List>
-          <DrawerListItem text='Show Meals' icon={<FastfoodIcon/>} onClick={() => console.log('show meals')}/>
-          <DrawerListItem text='Calendar' icon={<TodayIcon/>} onClick={() => console.log('calendar')}/>
-          <DrawerListItem text='Download' icon={<DownloadIcon/>} onClick={() => console.log('download')}/>
+          <DrawerListItem text='Show Meals' icon={<FastfoodIcon/>} link="/meals"/>
+          <DrawerListItem text='Calendar' icon={<TodayIcon/>} link="/calendar"/>
+          <DrawerListItem text='Download' icon={<DownloadIcon/>} link="/download"/>
         </List>
         
         <Divider/>
         <List>
-          <DrawerListItem text='Github' icon={<GitHubIcon/>} onClick={() => window.open('https://github.com/parkjbdev/MealManager')}/>
-          <DrawerListItem text='About' icon={<InfoIcon/>} onClick={() => console.log('about')}/>
+          <DrawerListItem text='Github' icon={<GitHubIcon/>} link="/github"/>
+          <DrawerListItem text='About' icon={<InfoIcon/>} link="/about"/>
         </List>
       </Drawer>
-      
+      {/*<div style={{display: "", zIndex: 1000, opacity: "50%", width: "100%", height: "1000px", backgroundColor: "black"}}>haha</div>*/}
     </>
   );
 };
