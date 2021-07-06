@@ -36,6 +36,7 @@ const NewMealForm = (props: { handleClose: Function }) => {
   }, [date, mealType])
   
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // TODO: Bug: 이미지 업로드후 업로드된 이미지 변경할 때 아무것도 선택안하고 종료시 에러
     event.target.files ?
       setImg(URL.createObjectURL(event.target.files[0])) :
       setImg('')

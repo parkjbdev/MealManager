@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MealCard from "../MealCard/MealCard";
 import IMeal from "../IMeal";
 import {Grid, makeStyles} from "@material-ui/core";
+import option from '../../../option.json'
 
 const useStyles = makeStyles({
     root: {
@@ -15,18 +16,21 @@ const ShowMeals = (props: { year: number, month: number }) => {
   const [meals, setMeals] = useState<IMeal[]>([])
   
   const fetchMeals = async (year: number, month: number) => {
-    const res = await fetch(`./meals/${year}/${month}/`)
-    const data = await res.json()
-    setMeals(data)
+    const res = await fetch(`${option.server}/meals/${year}/${month}/`)
+    return await res.json()
   }
-  fetchMeals(props.year, props.month)
+  
+  useEffect(() => {
+    fetchMeals(props.year, props.month)
+      .then(setMeals)
+  }, [props.year, props.month]);
+  
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        {meals.map(meal => <MealCard meal={meal}/>)}
+        {meals.map(meal => <MealCard key={meal._id} meal={meal}/>)}
       </Grid>
     </div>
-  
   );
 };
 

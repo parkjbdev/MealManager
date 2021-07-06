@@ -18,16 +18,14 @@ const deleteMealButton = async (id: string) => {
 const DeleteMealButton = (props: { id: string }) => {
   const classes = useStyles();
   return (
-    <div>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-        startIcon={<DeleteIcon/>}
-        onClick={() => deleteMealButton(props.id)}>
-        Delete
-      </Button>
-    </div>
+    <Button
+      variant="contained"
+      color="secondary"
+      className={classes.button}
+      startIcon={<DeleteIcon/>}
+      onClick={() => deleteMealButton(props.id)}>
+      Delete
+    </Button>
   );
 };
 

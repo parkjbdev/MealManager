@@ -32,12 +32,12 @@ const MealCard = (props: { meal: IMeal }) => {
             image={imgsrc}
             title={name}
           />
-          <CardContent>
-            <CardName name={name}/>
-            <List list={menus}/>
-            <List list={snacks}/>
-          </CardContent>
         </CardActionArea>
+        <CardContent>
+          <CardName name={name}/>
+          <List list={menus}/>
+          <List list={snacks}/>
+        </CardContent>
         <CardActions>
           <DeleteMealButton id={id}/>
         </CardActions>
