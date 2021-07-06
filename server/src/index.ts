@@ -1,10 +1,11 @@
 import path from 'path'
 import express from 'express'
+import session from "express-session";
+import cors from 'cors'
 
 import getMeal from './routes/GET_meal'
 import postMeal from './routes/POST_meal'
 import deleteMeal from './routes/DELETE_meal'
-import session from "express-session";
 
 let app = express()
 
@@ -13,6 +14,7 @@ app.set('port', process.env.PORT || 3000)
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cors())
 
 // Logger
 app.use('/', (req, res, next) => {

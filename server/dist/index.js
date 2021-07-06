@@ -5,15 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
+const express_session_1 = __importDefault(require("express-session"));
+const cors_1 = __importDefault(require("cors"));
 const GET_meal_1 = __importDefault(require("./routes/GET_meal"));
 const POST_meal_1 = __importDefault(require("./routes/POST_meal"));
 const DELETE_meal_1 = __importDefault(require("./routes/DELETE_meal"));
-const express_session_1 = __importDefault(require("express-session"));
 let app = express_1.default();
 app.set('port', process.env.PORT || 3000);
 // Middleware
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
+app.use(cors_1.default());
 // Logger
 app.use('/', (req, res, next) => {
     console.log(req.ip, ':', req.method, req.originalUrl);
@@ -35,8 +37,9 @@ app.use(express_session_1.default({
     },
     resave: false
 }));
-app.use(express_1.default.static('public'));
-// app.use(express.static('../client/build'))
+// Set FrontEnd page
+app.use(express_1.default.static('public')); // vanillaJS
+// app.use(express.static('../client/build')) // React
 // routers
 app.use(GET_meal_1.default.router);
 app.use(POST_meal_1.default.router);
