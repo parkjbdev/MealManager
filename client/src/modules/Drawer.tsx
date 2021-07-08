@@ -26,6 +26,9 @@ const style = (theme: Theme) => createStyles({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  divider: {
+    margin: "8px 0"
+  }
 })
 const useStyles = makeStyles(style)
 
@@ -53,20 +56,16 @@ const AppDrawer = (props: { menuOpen: boolean, handleDrawerClose: () => void, ha
         </div>
         
         {/* Drawer */}
-        <Divider/>
-        <List>
+        <List onClick={props.handleDrawerClose}>
+          <Divider className={classes.divider}/>
           <DrawerListItem text='Show Meals' icon={<FastfoodIcon/>} link="/meals"/>
           <DrawerListItem text='Calendar' icon={<TodayIcon/>} link="/calendar"/>
           <DrawerListItem text='Download' icon={<DownloadIcon/>} link="/download"/>
-        </List>
-        
-        <Divider/>
-        <List>
+          <Divider className={classes.divider}/>
           <DrawerListItem text='Github' icon={<GitHubIcon/>} link="/github"/>
           <DrawerListItem text='About' icon={<InfoIcon/>} link="/about"/>
         </List>
       </Drawer>
-      {/*<div style={{display: "", zIndex: 1000, opacity: "50%", width: "100%", height: "1000px", backgroundColor: "black"}}>haha</div>*/}
     </>
   );
 };

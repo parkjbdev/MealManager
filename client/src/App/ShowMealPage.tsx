@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 import '../resource/stylesheet/App.css';
 import SelectMealMonth from "./Meal/ShowMeals/SelectMealMonth";
 import NewMealFormModal from "./Meal/NewMealFormModal";
-import {makeStyles} from "@material-ui/core";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import AddButton from "./Meal/AddButton";
 import ShowMeals from "./Meal/ShowMeals/ShowMeals";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   addButton: {
-    // position: "-webkit-sticky",
     position: "fixed",
-    bottom: "5%",
-    right: "5%"
+    bottom: theme.spacing(4),
+    right: theme.spacing(4)
   }
-})
+}))
 
 function ShowMealPage() {
   const classes = useStyles()

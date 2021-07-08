@@ -1,23 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import MealCard from "../MealCard/MealCard";
 import IMeal from "../IMeal";
-import {makeStyles} from "@material-ui/core";
 import option from '../../../option.json'
-
-const useStyles = makeStyles({
-    flexContainer: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, 18rem)",
-      justifyContent: "center",
-      margin: "1rem",
-      padding: 0
-    }
-  }
-)
+import StackGrid from "react-stack-grid";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const ShowMeals = (props: { year: number, month: number }) => {
-  const classes = useStyles()
   const [meals, setMeals] = useState<IMeal[]>([])
+  const {width} = useWindowDimensions();
   
   const fetchMeals = async (year: number, month: number) => {
     const res = await fetch(`${option.server}/meals/${year}/${month}/`)
@@ -30,9 +20,9 @@ const ShowMeals = (props: { year: number, month: number }) => {
   }, [props.year, props.month]);
   
   return (
-    <div className={classes.flexContainer}>
+    <StackGrid columnWidth={width <= 820 ? '100%' : 400} monitorImagesLoaded={true} itemComponent="div">
       {meals.map(meal => <MealCard key={meal._id} meal={meal}/>)}
-    </div>
+    </StackGrid>
   );
 };
 
