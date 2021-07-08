@@ -4,7 +4,10 @@ import AddIcon from "@material-ui/icons/Add";
 
 const AddButton = (props: { className?: string, onClick: Function }) => {
   return (
-    <div className={props.className}>
+    <div className={props.className} style={{
+      "width": "fit-content",
+      "height": "fit-content"
+    }}>
       <button type="button"
               style={{display: "none"}}
               id="add-button"

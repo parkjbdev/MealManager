@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const deleteMealButton = async (id: string) => {
+const deleteMeal = async (id: string) => {
   const res = await fetch(`${option.server}/${id}`, {method: 'DELETE'})
   const data = await res.json()
   // TODO: DELETE from cards
@@ -19,12 +19,12 @@ const DeleteMealButton = (props: { id: string }) => {
   const classes = useStyles();
   return (
     <Button
-      variant="contained"
+      size="small"
       color="secondary"
       className={classes.button}
       startIcon={<DeleteIcon/>}
-      onClick={() => deleteMealButton(props.id)}>
-      Delete
+      onClick={() => deleteMeal(props.id)}>
+      삭제
     </Button>
   );
 };

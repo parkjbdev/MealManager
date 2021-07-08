@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../resource/stylesheet/App.css';
 import SelectMealMonth from "./Meal/ShowMeals/SelectMealMonth";
 import NewMealFormModal from "./Meal/NewMealFormModal";
-import {Container, makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import AddButton from "./Meal/AddButton";
 import ShowMeals from "./Meal/ShowMeals/ShowMeals";
 
@@ -24,12 +24,12 @@ function ShowMealPage() {
   const handleFormClose = () => setFormOpen(false)
   
   return (
-    <Container>
+    <>
       <SelectMealMonth month={selectedMonth} onChange={setSelectedMonth}/>
       <ShowMeals year={selectedMonth.getFullYear()} month={selectedMonth.getMonth() + 1}/>
       <NewMealFormModal open={formOpen} handleClose={handleFormClose}/>
       <AddButton onClick={handleFormOpen} className={classes.addButton}/>
-    </Container>
+    </>
   );
 }
 

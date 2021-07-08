@@ -2,18 +2,19 @@ import React from 'react';
 import IMeal from "../IMeal";
 import option from '../../../option.json'
 
-import {Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, makeStyles,} from "@material-ui/core";
+import {Card, CardActionArea, CardActions, CardContent, CardMedia, makeStyles,} from "@material-ui/core";
 import DeleteMealButton from "./DeleteMealButton";
 import CardName from "./CardName";
 import List from "./List";
+import ModifyMealButton from "./ModifyMealButton";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
+    flexGrow: 1,
+    margin: "1rem",
+    alignSelf: "flex-start",
+    columnGap: 0
+  }
 });
 
 const MealCard = (props: { meal: IMeal }) => {
@@ -24,25 +25,24 @@ const MealCard = (props: { meal: IMeal }) => {
   const menus = props.meal.menus
   const snacks = props.meal.snacks
   return (
-    <Grid item>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={imgsrc}
-            title={name}
-          />
-        </CardActionArea>
-        <CardContent>
-          <CardName name={name}/>
-          <List list={menus}/>
-          <List list={snacks}/>
-        </CardContent>
-        <CardActions>
-          <DeleteMealButton id={id}/>
-        </CardActions>
-      </Card>
-    </Grid>
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          image={imgsrc}
+          title={name}
+          component="img"
+        />
+      </CardActionArea>
+      <CardContent>
+        <CardName name={name}/>
+        <List list={menus}/>
+        <List list={snacks}/>
+      </CardContent>
+      <CardActions style={{"float": "right"}}>
+        <ModifyMealButton id={id}/>
+        <DeleteMealButton id={id}/>
+      </CardActions>
+    </Card>
   )
 }
 

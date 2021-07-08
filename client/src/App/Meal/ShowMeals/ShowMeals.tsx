@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import MealCard from "../MealCard/MealCard";
 import IMeal from "../IMeal";
-import {Grid, makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import option from '../../../option.json'
 
 const useStyles = makeStyles({
-    root: {
-      flexGrow: 1,
+    flexContainer: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, 18rem)",
+      justifyContent: "center",
+      margin: "1rem",
+      padding: 0
     }
   }
 )
@@ -26,10 +30,8 @@ const ShowMeals = (props: { year: number, month: number }) => {
   }, [props.year, props.month]);
   
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        {meals.map(meal => <MealCard key={meal._id} meal={meal}/>)}
-      </Grid>
+    <div className={classes.flexContainer}>
+      {meals.map(meal => <MealCard key={meal._id} meal={meal}/>)}
     </div>
   );
 };
